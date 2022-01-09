@@ -6,20 +6,30 @@
 //     width: 1920px;
 // }
 
-.sidenav-header {
-  width: 100%;
-  height: 140px;
+.mat-toolbar {
+  justify-content: space-between;
+}
+
+.toggle {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
 }
 
-@mixin sidenav-theme($theme) {
-  $primary: map-get($theme, primary);
-  $warn: map-get($theme, warn);
+// .sidenav-header {
+//   width: 100%;
+//   height: 140px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
 
-  .sidenav-header {
-    background: mat-color($primary, darker);
-    color: mat-color($primary, default-contrast);
-  }
-}
+// @mixin sidenav-theme($theme) {
+//   $primary: map-get($theme, primary);
+//   $warn: map-get($theme, warn);
+
+//   .sidenav-header {
+//     background: mat-color($primary, darker);
+//     color: mat-color($primary, default-contrast);
+//   }
+// }
