@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { ThemeService } from './theme.service';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Component, HostBinding } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,18 +8,22 @@ import { ThemeService } from './theme.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  isDarkMode: boolean = false;
+  
+  @HostBinding('class') className = '';
+  public toggleControl = new FormControl(false);
 
-  constructor(
-    private themeService: ThemeService
-  ) {
-  }
+  constructor(private overlay: OverlayContainer) { }
 
-  toggleDarkMode() {
-    this.isDarkMode = this.themeService.isDarkMode();
+  ngOnInit(): void {
+    this.toggleControl.valueChanges.subscribe((darkMode) => {
+      const darkClassName = 'dark-mode';
+      this.className = darkMode ? darkClassName : '';
 
-    this.isDarkMode
-      ? this.themeService.update('light-mode')
-      : this.themeService.update('dark-mode');
+      if (darkMode) {
+        this.overlay.getContainerElement().classList.add(darkClassName);
+      } else {
+        this.overlay.getContainerElement().classList.remove(darkClassName);
+      }
+    });
   }
 }
