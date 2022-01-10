@@ -11,6 +11,8 @@ export class AppComponent {
   
   @HostBinding('class') className = '';
   public toggleControl = new FormControl(false);
+  public value = new FormControl();
+  public loading: boolean = false;
 
   constructor(private overlay: OverlayContainer) { }
 
@@ -25,5 +27,9 @@ export class AppComponent {
         this.overlay.getContainerElement().classList.remove(darkClassName);
       }
     });
+  }
+
+  search() {
+    console.log('Procurar');
   }
 }

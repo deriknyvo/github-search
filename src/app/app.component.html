@@ -1,16 +1,119 @@
-<mat-toolbar color="primary">
-  <span>
-    Teste ZG Soluções
-  </span>
+<div class="layout">
+  <mat-toolbar color="primary">
+    <span>
+      Teste ZG Soluções
+    </span>
+    
+    <div class="toggle-control">
+      <mat-icon>brightness_5</mat-icon>
+      <mat-slide-toggle [formControl]="toggleControl"></mat-slide-toggle>
+      <mat-icon>bedtime</mat-icon>
+    </div>
+  </mat-toolbar>
   
-  <div class="toggle-control">
-    <mat-icon>brightness_5</mat-icon>
-    <mat-slide-toggle [formControl]="toggleControl"></mat-slide-toggle>
-    <mat-icon>bedtime</mat-icon>
-  </div>
+  <main class="mat-app-background">
 
-</mat-toolbar>
+    <form>
+      <mat-form-field appearance="fill">
+        <button matPrefix mat-icon-button aria-label="Search" (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+        
+        <mat-label>Pesquisar</mat-label>
+        
+        <input cdkFocusInitial matInput [formControl]="value" placeholder="Repositórios ou pessoas">
+        
+        <button *ngIf="value.value" matSuffix mat-icon-button aria-label="Clear" (click)="value.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
 
-<div class="content mat-app-background">
+      <mat-chip-list aria-label="Filters">
+        <mat-chip color="primary" selected>Pessoas</mat-chip>
+        <mat-chip color="primary">Repositórios</mat-chip>
+      </mat-chip-list>
+    </form>
 
+    <div class="result">
+
+      <div *ngIf="loading" class="loading">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+
+      <mat-selection-list *ngIf="false" [multiple]="false">
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+
+        <mat-list-option>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>Teste</div>
+          <div mat-line> 18/10/2022 </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+    
+  </main>
 </div>

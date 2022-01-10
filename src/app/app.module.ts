@@ -6,15 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 
@@ -27,20 +25,16 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatToolbarModule,
-    MatSlideToggleModule,
-    MatSidenavModule,
-    MatDialogModule,
-    MatButtonModule,
     FormsModule,
-    MatButtonModule,
-    MatCardModule,
+    MatToolbarModule,
     MatIconModule,
-    MatDialogModule,
+    MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule,
-    MatExpansionModule
+    MatChipsModule,
+    MatButtonModule,
+    MatListModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
