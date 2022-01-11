@@ -1,6 +1,8 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,10 @@ export class AppComponent {
   public isLoading: boolean = false;
   public isShowContent: boolean = false;
 
-  constructor(private overlay: OverlayContainer) { }
+  constructor(
+    private overlay: OverlayContainer,
+    private dialogService: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.toggleControl.valueChanges.subscribe((darkMode) => {
@@ -32,10 +37,15 @@ export class AppComponent {
 
   search() {
     this.isLoading = true;
+    this.isShowContent = false;
 
     setTimeout(() => {
       this.isLoading = false;
       this.isShowContent = true;
     }, 2000);
+  }
+
+  openDialog() {
+    this.dialogService.open(DialogComponent);
   }
 }

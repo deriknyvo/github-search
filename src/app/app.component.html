@@ -38,78 +38,48 @@
         <mat-spinner diameter="50"></mat-spinner>
       </div>
 
-      <mat-selection-list *ngIf="true" [multiple]="false">
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
+      <mat-selection-list *ngIf="isShowContent" [multiple]="false">
+        <mat-list-option (click)="openDialog()">
+          <img mat-list-icon class="profile-image" src="https://avatars.githubusercontent.com/u/33598231?v=4" alt="Profile Picture">
+          <div class="name" mat-line>Derik Nyvo Javarini Oliveira</div>
+          <div mat-line class="followers">
+            <mat-icon class="followers-icon">peoples</mat-icon>
+            <span>5 seguidores</span>
+          </div>
+
+          <div mat-line>
+            <div class="languages">
+              <mat-chip-list class="user-languages">
+                <mat-chip color="primary" selected>JavaScript</mat-chip>
+                <mat-chip color="primary" selected>PHP</mat-chip>
+                <mat-chip color="primary" selected>HTML</mat-chip>
+                <mat-chip color="accent" selected>CSS</mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
         </mat-list-option>
 
         <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
+          <mat-icon class="book-icon material-icons-outlined" mat-list-icon>book</mat-icon>
+          <div class="name" mat-line>Teste</div>
+          
+          <div mat-line class="stars">
+            <mat-icon class="stars-icon">star_outline</mat-icon>
+            <span>15</span>
+          </div>
+          
+          <div mat-line>
+            <div class="languages">
+              <mat-chip-list class="user-languages">
+                <mat-chip color="primary" selected>JavaScript</mat-chip>
+                <mat-chip color="primary" selected>PHP</mat-chip>
+                <mat-chip color="primary" selected>HTML</mat-chip>
+                <mat-chip color="accent" selected>CSS</mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
         </mat-list-option>
 
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <div mat-line>Teste</div>
-          <div mat-line> 18/10/2022 </div>
-        </mat-list-option>
       </mat-selection-list>
     </div>
   </main>

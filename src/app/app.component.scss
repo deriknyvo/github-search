@@ -80,3 +80,42 @@ main {
     align-items: center;
     gap: 8px;
 }
+
+.profile-image {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.name {
+    font-weight: 500 !important;
+    color: var(--name-text-color);
+}
+
+.followers, .stars {
+    color: var(--followers-text-color);
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px !important;
+}
+
+.stars {
+    gap: 4px;
+}
+
+.followers-icon, .stars-icon {
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+}
+
+.user-languages mat-chip {
+    font-size: 12px;
+    min-height: 16px;
+}
+
+.book-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 50px !important;
+}
