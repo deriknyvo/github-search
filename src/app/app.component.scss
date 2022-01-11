@@ -20,7 +20,7 @@ main {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        padding: 0 100px;
+        margin: 0 100px;
 
         .mat-form-field {
             width: 100%;
@@ -30,7 +30,7 @@ main {
 
     .result {
         flex-grow: 1;
-        padding: 0 100px;
+        margin: 0 100px;
         overflow: auto;
 
         .loading {
@@ -39,9 +39,29 @@ main {
             align-items: center;
             justify-content: center;
         }
-    }
-    
+
+        .mat-list-base {
+    padding-right: 8px;
 }
+    }
+}
+
+.result::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: var(--scrollbar-background);
+}
+
+.result::-webkit-scrollbar {
+    border-radius: 8px;
+    width: 8px;
+    background-color: var(--scrollbar-background);
+}
+
+.result::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #009688;
+}
+
 
 @media (min-width: 2492px) {
     main {

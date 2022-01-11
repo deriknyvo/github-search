@@ -32,11 +32,13 @@ $angular-dark-theme: mat.define-dark-theme(
 
 .dark-mode {
   @include mat.all-component-colors($angular-dark-theme);
+  --scrollbar-background: #454545;
 }
 
 html,
 body {
   height: 100%;
+  --scrollbar-background: #f0f0f0;
 }
 
 body {

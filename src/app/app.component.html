@@ -12,7 +12,6 @@
   </mat-toolbar>
   
   <main class="mat-app-background">
-
     <form>
       <mat-form-field appearance="fill">
         <button matPrefix mat-icon-button aria-label="Search" (click)="search()">
@@ -35,12 +34,11 @@
     </form>
 
     <div class="result">
-
-      <div *ngIf="loading" class="loading">
+      <div *ngIf="isLoading" class="loading">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
 
-      <mat-selection-list *ngIf="false" [multiple]="false">
+      <mat-selection-list *ngIf="true" [multiple]="false">
         <mat-list-option>
           <mat-icon mat-list-icon>folder</mat-icon>
           <div mat-line>Teste</div>
@@ -114,6 +112,5 @@
         </mat-list-option>
       </mat-selection-list>
     </div>
-    
   </main>
 </div>

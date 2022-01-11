@@ -12,7 +12,8 @@ export class AppComponent {
   @HostBinding('class') className = '';
   public toggleControl = new FormControl(false);
   public value = new FormControl();
-  public loading: boolean = false;
+  public isLoading: boolean = false;
+  public isShowContent: boolean = false;
 
   constructor(private overlay: OverlayContainer) { }
 
@@ -30,6 +31,11 @@ export class AppComponent {
   }
 
   search() {
-    console.log('Procurar');
+    this.isLoading = true;
+
+    setTimeout(() => {
+      this.isLoading = false;
+      this.isShowContent = true;
+    }, 2000);
   }
 }
