@@ -12,27 +12,18 @@ import { DialogComponent } from './dialog/dialog.component';
 export class AppComponent {
   
   @HostBinding('class') className = '';
-  public toggleControl = new FormControl(false);
   public value = new FormControl();
   public isLoading: boolean = false;
   public isShowContent: boolean = false;
 
   constructor(
-    private overlay: OverlayContainer,
     private dialogService: MatDialog
   ) { }
 
-  ngOnInit(): void {
-    this.toggleControl.valueChanges.subscribe((darkMode) => {
-      const darkClassName = 'dark-mode';
-      this.className = darkMode ? darkClassName : '';
+  ngOnInit(): void { }
 
-      if (darkMode) {
-        this.overlay.getContainerElement().classList.add(darkClassName);
-      } else {
-        this.overlay.getContainerElement().classList.remove(darkClassName);
-      }
-    });
+  toogleTheme(value: string) {
+    this.className = value;
   }
 
   search() {

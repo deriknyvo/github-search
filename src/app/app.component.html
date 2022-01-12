@@ -1,21 +1,16 @@
 <div class="layout">
-  <mat-toolbar color="primary">
-    <span>
-      Teste ZG Soluções
-    </span>
-    
-    <div class="toggle-control">
-      <mat-icon>brightness_5</mat-icon>
-      <mat-slide-toggle [formControl]="toggleControl"></mat-slide-toggle>
-      <mat-icon>bedtime</mat-icon>
-    </div>
-  </mat-toolbar>
+
+  <app-toolbar (changeTheme)="toogleTheme($event)"
+    [title]="'Teste ZG Soluções'">
+  </app-toolbar>
   
   <main class="mat-app-background">
+
+    <!-- Input de busca -->
     <form>
       <mat-form-field appearance="fill">
         <button matPrefix mat-icon-button aria-label="Search" (click)="search()">
-          <mat-icon>search</mat-icon>
+          <!-- <mat-icon>search</mat-icon> -->
         </button>
         
         <mat-label>Pesquisar</mat-label>
@@ -23,7 +18,7 @@
         <input cdkFocusInitial matInput [formControl]="value" placeholder="Repositórios ou pessoas">
         
         <button *ngIf="value.value" matSuffix mat-icon-button aria-label="Clear" (click)="value.setValue('')">
-          <mat-icon>close</mat-icon>
+          <!-- <mat-icon>close</mat-icon> -->
         </button>
       </mat-form-field>
 
@@ -34,16 +29,18 @@
     </form>
 
     <div class="result">
+
       <div *ngIf="isLoading" class="loading">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
 
+      <!-- Lista -->
       <mat-selection-list *ngIf="isShowContent" [multiple]="false">
         <mat-list-option (click)="openDialog()">
           <img mat-list-icon class="profile-image" src="https://avatars.githubusercontent.com/u/33598231?v=4" alt="Profile Picture">
           <div class="name" mat-line>Derik Nyvo Javarini Oliveira</div>
           <div mat-line class="followers">
-            <mat-icon class="followers-icon">peoples</mat-icon>
+            <!-- <mat-icon class="followers-icon">peoples</mat-icon> -->
             <span>5 seguidores</span>
           </div>
 
@@ -64,7 +61,7 @@
           <div class="name" mat-line>Teste</div>
           
           <div mat-line class="stars">
-            <mat-icon class="stars-icon">star_outline</mat-icon>
+            <!-- <mat-icon class="stars-icon">star_outline</mat-icon> -->
             <span>15</span>
           </div>
           

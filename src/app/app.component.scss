@@ -10,7 +10,7 @@
 
 main {
     flex-grow: 1;
-    padding: 100px 50px 50px 50px;
+    padding: 60px 50px 50px 50px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -20,7 +20,7 @@ main {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        margin: 0 100px;
+        margin: 0 20px;
 
         .mat-form-field {
             width: 100%;
@@ -30,7 +30,7 @@ main {
 
     .result {
         flex-grow: 1;
-        margin: 0 100px;
+        margin: 0 20px;
         overflow: auto;
 
         .loading {
@@ -69,16 +69,44 @@ main {
     }
 }
 
+@media (max-width: 768px) {
+    main {
+        padding: 40px 0;
 
-.mat-toolbar {
-    justify-content: space-between;
-    min-height: 64px;
+        form, .result {
+            margin: 0 50px;
+        }
+    }
 }
 
-.toggle-control {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+@media (max-width: 425px) {
+    main {
+        padding: 12px 0;
+
+        form, .result {
+            margin: 0 12px;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    main {
+        padding: 26px 0;
+
+        form, .result {
+            margin: 0 26px;
+        }
+    }
+}
+
+@media (max-width: 1440px) {
+    main {
+        padding: 36px 0;
+
+        form, .result {
+            margin: 0 36px;
+        }
+    }
 }
 
 .profile-image {
