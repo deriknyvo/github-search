@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { SearchInputModule } from './search-input/search-input.module';
@@ -27,7 +28,8 @@ import { DialogComponent } from './dialog/dialog.component';
     MatProgressSpinnerModule,
     ToolbarModule,
     SearchInputModule,
-    ResultListModule
+    ResultListModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

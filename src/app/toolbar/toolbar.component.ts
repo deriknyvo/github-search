@@ -12,6 +12,7 @@ export class ToolbarComponent implements OnInit {
 
   @Input() title: string = '';
   @Output() changeTheme = new EventEmitter();
+  
   public toggleControl = new FormControl(false);
 
   constructor(
@@ -22,6 +23,7 @@ export class ToolbarComponent implements OnInit {
     this.toggleControl.valueChanges.subscribe((darkMode) => {
       const darkClassName = 'dark-mode';
       const isDarkTheme = darkMode ? darkClassName : '';
+      
       this.changeTheme.emit(isDarkTheme);
 
       if (darkMode) {

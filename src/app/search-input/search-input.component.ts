@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
 import { Filter } from '../interfaces';
 
 @Component({
@@ -8,15 +9,17 @@ import { Filter } from '../interfaces';
   styleUrls: ['./search-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchInputComponent implements OnInit {
+export class SearchInputComponent {
   
+  @ViewChild(MatInput) input!: MatInput;
   @Output() searchWord = new EventEmitter();
   @Output() filtersToSearch = new EventEmitter();
+
   public word = new FormControl();
 
-  constructor() { }
-
-  ngOnInit(): void { }
+  ngAfterViewInit() {
+    setTimeout(() => this.input.focus(), 0);
+  }
 
   search() {
     this.searchWord.emit(this.word.value);

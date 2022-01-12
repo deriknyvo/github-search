@@ -1,7 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from './dialog/dialog.component';
 import { Filter } from './interfaces';
+import { SearchService } from './services/search.service';
 
 @Component({
   selector: 'app-root',
@@ -15,36 +14,23 @@ export class AppComponent {
   public isShowResult: boolean = false;
   private word: string = '';
   private filters: Filter[] = [];
+  public results = [];
 
-  constructor(
-    private dialogService: MatDialog
-  ) { }
-
-  ngOnInit(): void { }
+  constructor(private searchService: SearchService) { }
 
   toogleTheme(value: string) {
     this.className = value;
-  }
-
-  search(word: string) {
-    this.word = word;
   }
 
   toggleFilters(filters: Filter[]) {
     this.filters = filters;
   }
 
-  // search() {
-  //   this.isLoading = true;
-  //   this.isShowContent = false;
+  search(word: string) {
+    this.word = word;
 
-  //   setTimeout(() => {
-  //     this.isLoading = false;
-  //     this.isShowContent = true;
-  //   }, 2000);
-  // }
-
-  openDialog() {
-    this.dialogService.open(DialogComponent);
+    this.searchService.users(this.word).subscribe(response => {
+      console.log(response);
+    });
   }
 }
