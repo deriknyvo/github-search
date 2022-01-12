@@ -1,0 +1,8 @@
+<mat-chip-list multiple>
+    <mat-chip *ngFor="let filter of filters" color="primary"
+        (click)="toggleFilter(filter)"
+        [value]="filter.id"
+        [selected]="filter.selected">
+        {{ filter.label }}
+    </mat-chip>
+</mat-chip-list>

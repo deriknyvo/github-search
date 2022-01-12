@@ -1,26 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-
-interface UserResponse {
-  items: User[]
-}
-
-interface User {
-  avatar_url: string,
-  followers_url: string,
-  repos_url: string
-}
-
-interface RepositoryResponse {
-  items: Repository[]
-}
-
-interface Repository {
-  full_name: string,
-  language: string,
-  languages_url: string,
-}
+import { Repository, RepositoryResponse, User, UserResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'

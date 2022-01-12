@@ -1,8 +1,7 @@
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
+import { Filter } from './interfaces';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +11,10 @@ import { DialogComponent } from './dialog/dialog.component';
 export class AppComponent {
   
   @HostBinding('class') className = '';
-  public value = new FormControl();
   public isLoading: boolean = false;
-  public isShowContent: boolean = false;
+  public isShowResult: boolean = false;
+  private word: string = '';
+  private filters: Filter[] = [];
 
   constructor(
     private dialogService: MatDialog
@@ -26,15 +26,23 @@ export class AppComponent {
     this.className = value;
   }
 
-  search() {
-    this.isLoading = true;
-    this.isShowContent = false;
-
-    setTimeout(() => {
-      this.isLoading = false;
-      this.isShowContent = true;
-    }, 2000);
+  search(word: string) {
+    this.word = word;
   }
+
+  toggleFilters(filters: Filter[]) {
+    this.filters = filters;
+  }
+
+  // search() {
+  //   this.isLoading = true;
+  //   this.isShowContent = false;
+
+  //   setTimeout(() => {
+  //     this.isLoading = false;
+  //     this.isShowContent = true;
+  //   }, 2000);
+  // }
 
   openDialog() {
     this.dialogService.open(DialogComponent);

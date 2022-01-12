@@ -1,0 +1,15 @@
+:host ::ng-deep .mat-form-field-flex {
+    gap: 8px;
+}
+
+form {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 0 20px;
+
+    .mat-form-field {
+        width: 100%;
+        font-size: 16px;
+    }
+}

@@ -4,19 +4,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule } from '@angular/material/dialog';
-
 import { ToolbarModule } from './toolbar/toolbar.module';
+import { SearchInputModule } from './search-input/search-input.module';
+import { ResultListModule } from './result-list/result-list.module';
+
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { DialogComponent } from './dialog/dialog.component';
-
 
 @NgModule({
   declarations: [
@@ -29,14 +24,10 @@ import { DialogComponent } from './dialog/dialog.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    MatButtonModule,
-    MatListModule,
     MatProgressSpinnerModule,
-    MatDialogModule,
-    ToolbarModule
+    ToolbarModule,
+    SearchInputModule,
+    ResultListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

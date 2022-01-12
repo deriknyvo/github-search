@@ -1,83 +1,22 @@
 <div class="layout">
-
   <app-toolbar (changeTheme)="toogleTheme($event)"
     [title]="'Teste ZG Soluções'">
   </app-toolbar>
   
   <main class="mat-app-background">
-
-    <!-- Input de busca -->
-    <form>
-      <mat-form-field appearance="fill">
-        <button matPrefix mat-icon-button aria-label="Search" (click)="search()">
-          <!-- <mat-icon>search</mat-icon> -->
-        </button>
-        
-        <mat-label>Pesquisar</mat-label>
-        
-        <input cdkFocusInitial matInput [formControl]="value" placeholder="Repositórios ou pessoas">
-        
-        <button *ngIf="value.value" matSuffix mat-icon-button aria-label="Clear" (click)="value.setValue('')">
-          <!-- <mat-icon>close</mat-icon> -->
-        </button>
-      </mat-form-field>
-
-      <mat-chip-list aria-label="Filters">
-        <mat-chip color="primary" selected>Pessoas</mat-chip>
-        <mat-chip color="primary">Repositórios</mat-chip>
-      </mat-chip-list>
-    </form>
+    <app-search-input 
+      (filtersToSearch)="toggleFilters($event)"
+      (searchWord)="search($event)">
+    </app-search-input>
 
     <div class="result">
-
       <div *ngIf="isLoading" class="loading">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
 
-      <!-- Lista -->
-      <mat-selection-list *ngIf="isShowContent" [multiple]="false">
-        <mat-list-option (click)="openDialog()">
-          <img mat-list-icon class="profile-image" src="https://avatars.githubusercontent.com/u/33598231?v=4" alt="Profile Picture">
-          <div class="name" mat-line>Derik Nyvo Javarini Oliveira</div>
-          <div mat-line class="followers">
-            <!-- <mat-icon class="followers-icon">peoples</mat-icon> -->
-            <span>5 seguidores</span>
-          </div>
-
-          <div mat-line>
-            <div class="languages">
-              <mat-chip-list class="user-languages">
-                <mat-chip color="primary" selected>JavaScript</mat-chip>
-                <mat-chip color="primary" selected>PHP</mat-chip>
-                <mat-chip color="primary" selected>HTML</mat-chip>
-                <mat-chip color="accent" selected>CSS</mat-chip>
-              </mat-chip-list>
-            </div>
-          </div>
-        </mat-list-option>
-
-        <mat-list-option>
-          <mat-icon class="book-icon material-icons-outlined" mat-list-icon>book</mat-icon>
-          <div class="name" mat-line>Teste</div>
-          
-          <div mat-line class="stars">
-            <!-- <mat-icon class="stars-icon">star_outline</mat-icon> -->
-            <span>15</span>
-          </div>
-          
-          <div mat-line>
-            <div class="languages">
-              <mat-chip-list class="user-languages">
-                <mat-chip color="primary" selected>JavaScript</mat-chip>
-                <mat-chip color="primary" selected>PHP</mat-chip>
-                <mat-chip color="primary" selected>HTML</mat-chip>
-                <mat-chip color="accent" selected>CSS</mat-chip>
-              </mat-chip-list>
-            </div>
-          </div>
-        </mat-list-option>
-
-      </mat-selection-list>
+      <div *ngIf="isShowResult">
+        <app-result-list></app-result-list>
+      </div>
     </div>
   </main>
 </div>
