@@ -67,9 +67,28 @@ export class SearchService {
     });
   }
 
-  getUserFollowers(url: string): Observable<number> {
+  usersTest(term: string): Observable<any> {
+    const url = `https://api.github.com/search/users?q=${term}&per_page=3`;
+
+    return this.httpService.get(url, this.options);
+  }
+
+  getUser(login: string): Observable<any> {
+    const url = `https://api.github.com/users/${login}`;
+
     return this.httpService.get(url, this.options).pipe(
-      map((response: any) => response.count)
+      map((user: any) => {
+        return {
+          type: 'user',
+          avatar_url: user.avatar_url,
+          full_name: user.name,
+          username: user.login,
+          followers: user.followers,
+          following: user.following,
+          repos_url: user.repos_url,
+          bio: user.bio
+        }
+      })
     );
   }
 
