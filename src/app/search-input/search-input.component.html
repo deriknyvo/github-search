@@ -1,0 +1,16 @@
+<form>
+    <mat-form-field appearance="fill" >
+      <button matPrefix mat-icon-button aria-label="Search" (click)="search()">
+        <mat-icon>search</mat-icon>
+      </button>
+      
+      <mat-label>Pesquisar</mat-label>
+      <input matInput [formControl]="word" placeholder="Repositórios ou pessoas">
+      
+      <button *ngIf="word.value" matSuffix mat-icon-button aria-label="Clear" (click)="word.setValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <app-filters></app-filters>
+</form>

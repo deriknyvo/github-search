@@ -1,26 +1,35 @@
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
 import { AppRoutingModule } from './app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { SearchInputModule } from './search-input/search-input.module';
+import { ResultListModule } from './result-list/result-list.module';
+
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+import { AppComponent } from './app.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSlideToggleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MatProgressSpinnerModule,
+    ToolbarModule,
+    SearchInputModule,
+    ResultListModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

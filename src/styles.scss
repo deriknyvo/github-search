@@ -1,32 +1,51 @@
 @use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+@import "~@angular/material/theming";
+@include mat.core();
 
-$light-primary: mat.define-palette(mat.$indigo-palette);
-$light-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$light-theme: mat.define-light-theme((
-  color: (
-    primary: $light-primary,
-    accent: $light-accent,
+$angular-primary: mat.define-palette(mat.$teal-palette, 500, 100, 900);
+$angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$angular-warn: mat.define-palette(mat.$red-palette);
+
+$angular-default-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
   )
-));
+);
 
-$dark-primary: mat.define-palette(mat.$pink-palette);
-$dark-accent: mat.define-palette(mat.$blue-gray-palette, A200, A100, A400);
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $dark-primary,
-    accent: $dark-accent,
+@include mat.all-component-themes($angular-default-theme);
+
+$angular-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
   )
-));
+);
 
-.light-theme {
-  @include mat.core-color($light-theme);
-  @include mat.all-component-themes($light-theme);
+.dark-mode {
+  @include mat.all-component-colors($angular-dark-theme);
+  --scrollbar-background: #454545;
+  --name-text-color: white;
+  --followers-text-color: #b6b6b6;
 }
 
-.dark-theme {
-  @include mat.core-color($dark-theme);
-  @include mat.all-component-themes($dark-theme);
+html,
+body {
+  height: 100%;
+  --scrollbar-background: #f0f0f0;
+  --name-text-color: #424242;
+  --followers-text-color: #5c5c5c;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
