@@ -1,43 +1,26 @@
 <mat-selection-list [multiple]="false">
-    <mat-list-option (click)="openDialog()">
-      <img mat-list-icon class="profile-image" src="https://avatars.githubusercontent.com/u/33598231?v=4" alt="Profile Picture">
-      <div class="name" mat-line>Derik Nyvo Javarini Oliveira</div>
-      <div mat-line class="followers">
-        <mat-icon class="followers-icon">peoples</mat-icon>
-        <span>5 seguidores</span>
-      </div>
-
-      <div mat-line>
-        <div class="languages">
-          <mat-chip-list class="user-languages">
-            <mat-chip color="primary" selected>JavaScript</mat-chip>
-            <mat-chip color="primary" selected>PHP</mat-chip>
-            <mat-chip color="primary" selected>HTML</mat-chip>
-            <mat-chip color="accent" selected>CSS</mat-chip>
-          </mat-chip-list>
-        </div>
-      </div>
-    </mat-list-option>
-
-    <mat-list-option>
-      <mat-icon class="book-icon material-icons-outlined" mat-list-icon>book</mat-icon>
-      <div class="name" mat-line>Teste</div>
+  <mat-list-option *ngFor="let item of listResults">
+    <img *ngIf="item.type == 'user'" mat-list-icon class="profile-image" src="{{ item.avatar_url }}" alt="Profile Picture">
+    <mat-icon *ngIf="item.type == 'repository'" class="book-icon material-icons-outlined" mat-list-icon>book</mat-icon>
       
-      <div mat-line class="stars">
-        <mat-icon class="stars-icon">star_outline</mat-icon>
-        <span>15</span>
-      </div>
+    <div class="name" mat-line>{{ item.full_name }}</div>
       
-      <div mat-line>
-        <div class="languages">
-          <mat-chip-list class="user-languages">
-            <mat-chip color="primary" selected>JavaScript</mat-chip>
-            <mat-chip color="primary" selected>PHP</mat-chip>
-            <mat-chip color="primary" selected>HTML</mat-chip>
-            <mat-chip color="accent" selected>CSS</mat-chip>
-          </mat-chip-list>
-        </div>
-      </div>
-    </mat-list-option>
+    <div *ngIf="item.type == 'user'" mat-line class="followers">
+      <mat-icon class="followers-icon">peoples</mat-icon>
+      <span>5 seguidores</span>
+    </div>
 
-  </mat-selection-list>
+    <div *ngIf="item.type == 'repository' && item.stars" mat-line class="stars">
+      <mat-icon class="stars-icon">star_outline</mat-icon>
+      <span>{{ item.stars }}</span>
+    </div>
+  
+    <div mat-line *ngIf="item.language">
+      <div class="languages">
+        <mat-chip-list class="user-languages">
+          <mat-chip color="primary" selected>{{ item.language }}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+  </mat-list-option>
+</mat-selection-list>

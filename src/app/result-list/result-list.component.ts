@@ -7,18 +7,15 @@ import { User, Repository } from '../interfaces';
   styleUrls: ['./result-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResultListComponent implements OnInit {
+export class ResultListComponent implements OnInit{
 
-  @Input() listResults: User[] | Repository[] | [] = [];
-
-  constructor() { }
+  @Input() listResults!: Array<any>;
 
   ngOnInit(): void {
-    console.log(this.listResults);
-  }
-
-  openDialog() {
     
   }
 
+  ngOnChanges(change: any) {
+    console.log(change);
+  }
 }

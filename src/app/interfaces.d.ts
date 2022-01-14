@@ -4,22 +4,40 @@ export interface Filter {
     label: string
 }
 
-export interface UserResponse {
-    items: User[]
+export interface UserRequest {
+    items: UserResponse[]
 }
 
-export interface User {
+export interface UserResponse {
     avatar_url: string,
+    login: string,
     followers_url: string,
     repos_url: string
 }
 
+export interface User {
+    type: string,
+    avatar_url: string,
+    full_name: string,
+    followers_url: string,
+    repos_url: string
+}
+
+export interface RepositoryRequest {
+    items: RepositoryResponse[]
+}
+
 export interface RepositoryResponse {
-    items: Repository[]
+    full_name: string,
+    stargazers_count: number,
+    language: string,
+    languages_url: string,
 }
 
 export interface Repository {
+    type: string,
     full_name: string,
+    stars: number,
     language: string,
     languages_url: string,
 }

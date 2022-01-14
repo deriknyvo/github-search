@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { Filter } from '../interfaces';
 
 @Component({
   selector: 'app-search-input',
@@ -13,7 +12,6 @@ export class SearchInputComponent {
   
   @ViewChild(MatInput) input!: MatInput;
   @Output() searchWord = new EventEmitter();
-  @Output() filtersToSearch = new EventEmitter();
 
   public word = new FormControl();
 
@@ -23,10 +21,6 @@ export class SearchInputComponent {
 
   search() {
     this.searchWord.emit(this.word.value);
-  }
-
-  filtersControl(filters: Filter[]) {
-    this.filtersToSearch.emit(filters);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { Filter } from './interfaces';
+import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
 
 @Component({
@@ -10,11 +10,11 @@ import { SearchService } from './services/search.service';
 export class AppComponent {
   
   @HostBinding('class') className = '';
+
   public isLoading: boolean = false;
   public isShowResult: boolean = false;
   private word: string = '';
-  private filters: Filter[] = [];
-  public results = [];
+  public results: Array<User | Repository> = [];
 
   constructor(private searchService: SearchService) { }
 
@@ -22,15 +22,20 @@ export class AppComponent {
     this.className = value;
   }
 
-  toggleFilters(filters: Filter[]) {
-    this.filters = filters;
-  }
-
   search(word: string) {
     this.word = word;
+    this.isLoading = true;
+    this.isShowResult = false;
 
-    this.searchService.users(this.word).subscribe(response => {
-      console.log(response);
+    this.searchService.all(this.word).subscribe(response => {
+
+      const data = response.map(item => {
+        const followers = this.searchService.getUserFollowers(item.followers_url);
+      })
+
+      this.results = response;
+      this.isLoading = false;
+      this.isShowResult = true;
     });
   }
 }
