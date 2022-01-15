@@ -17,6 +17,7 @@ export class ResultListComponent {
 
   openDialog(item: any) {
     this.dialog.open(DialogComponent, {
+      maxHeight: '600px',
       maxWidth: '1152px',
       data: item,
       panelClass: 'custom-dialog-container'

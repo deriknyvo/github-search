@@ -1,16 +1,16 @@
 <div class="container">
     <div class="infos">
-        <img src="https://avatars.githubusercontent.com/u/91613?v=4" alt="User Image">
-        <h1 class="name">Derik Nyvo</h1>
-        <p class="username">deriknyvo</p>
+        <img [src]="data.avatar_url" alt="User Image">
+        <h1 class="name">{{ data.name }}</h1>
+        <p class="username">{{ data.login }}</p>
 
         <p class="bio">
-            Visionary tech leader with 20 years software development experience.
+            {{ data.bio }}
         </p>
 
         <div class="followers">
             <mat-icon class="followers-icon">peoples</mat-icon>
-            <span>15 seguidores · 36 seguindo</span>
+            <span>{{ data.followers }} seguidores · {{ data.following }} seguindo</span>
         </div>
     </div>
 
@@ -18,110 +18,28 @@
         <p class="title">Repositórios</p>
 
         <div class="cards-repositories">
-            <mat-card>
-                <a href="#">robotframework.github.com</a>
+            <mat-card *ngFor="let repo of repos">
+                <a target="_blank" [href]="repo.html_url">{{ repo.full_name }}</a>
                 
                 <p>
-                    Forked from robotframework/robotframework.github.com
-                    Robot Framework ecosystem from page
+                    {{ repo.description }}
                 </p>
     
                 <div class="repo-infos">
-                    <mat-chip-list>
+                    <mat-chip-list *ngIf="repo.language">
                         <mat-chip selected>
-                          CSS
+                          {{ repo.language }}
                         </mat-chip>
                     </mat-chip-list>
         
                     <div class="stars">
                         <mat-icon class="icon">star_outline</mat-icon>
-                        <span>15</span>
+                        <span>{{ repo.stargazers_count }}</span>
                     </div>
         
                     <div class="forks">
                         <mat-icon class="icon">device_hub</mat-icon>
-                        <span>15</span>
-                    </div>
-                </div>
-            </mat-card>
-
-            <mat-card>
-                <a href="#">robotframework.github.com</a>
-                
-                <p>
-                    Forked from robotframework/robotframework.github.com
-                    Robot Framework ecosystem from page
-                </p>
-    
-                <div class="repo-infos">
-                    <mat-chip-list>
-                        <mat-chip selected>
-                          CSS
-                        </mat-chip>
-                    </mat-chip-list>
-        
-                    <div class="stars">
-                        <mat-icon class="icon">star_outline</mat-icon>
-                        <span>15</span>
-                    </div>
-        
-                    <div class="forks">
-                        <mat-icon class="icon">device_hub</mat-icon>
-                        <span>15</span>
-                    </div>
-                </div>
-            </mat-card>
-
-            <mat-card>
-                <a href="#">robotframework.github.com</a>
-                
-                <p>
-                    Forked from robotframework/robotframework.github.com
-                    Robot Framework ecosystem from page
-                </p>
-    
-                <div class="repo-infos">
-                    <mat-chip-list>
-                        <mat-chip selected>
-                          CSS
-                        </mat-chip>
-                    </mat-chip-list>
-        
-                    <div class="stars">
-                        <mat-icon class="icon">star_outline</mat-icon>
-                        <span>15</span>
-                    </div>
-        
-                    <div class="forks">
-                        <mat-icon class="icon">device_hub</mat-icon>
-                        <span>15</span>
-                    </div>
-                </div>
-            </mat-card>
-
-            <mat-card>
-                <a href="#">robotframework.github.com</a>
-                
-                <p>
-                    Forked from robotframework/robotframework.github.com
-                    Robot Framework ecosystem from page
-                </p>
-    
-                <div class="repo-infos">
-                    <mat-chip-list>
-                        <mat-chip selected>
-                          CSS
-                        </mat-chip>
-                    </mat-chip-list>
-        
-                    <div class="stars">
-                        <mat-icon class="icon">star_outline</mat-icon>
-                        <span>15</span>
-                    </div>
-        
-                    <div class="forks">
-                        <mat-icon class="icon">device_hub</mat-icon>
-                        <span>15</span>
+                        <span>{{ repo.forks_count }}</span>
                     </div>
                 </div>
             </mat-card>

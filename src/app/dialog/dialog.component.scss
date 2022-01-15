@@ -1,6 +1,7 @@
 .container {
     display: flex;
     gap: 32px;
+    max-height: calc(600px - 80px);
 }
 
 .infos {
@@ -32,6 +33,8 @@ img {
 
 .repositories {
     flex-grow: 1;
+    overflow: auto;
+    padding: 0 10px;
 
     .title {
         font-size: 18px;
@@ -39,14 +42,32 @@ img {
     }
 }
 
+.repositories::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: var(--scrollbar-background);
+}
+
+.repositories::-webkit-scrollbar {
+    border-radius: 8px;
+    width: 8px;
+    background-color: var(--scrollbar-background);
+}
+
+.repositories::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #009688;
+}
+
 .cards-repositories {
     display: flex;
     gap: 16px;
-    align-items: flex-start;
     flex-wrap: wrap;
 
     mat-card {
         flex: 1 0 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     a {
