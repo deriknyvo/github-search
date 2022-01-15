@@ -1,7 +1,62 @@
 import { Component, HostBinding } from '@angular/core';
-import { concatMap, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
+import { concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
+
+const languageColors: any = {
+  'javascript': {
+    backgroundColor: '#f1e05a',
+    color: 'black'
+  },
+  'ruby': {
+    backgroundColor: '#701516',
+    color: 'white'
+  },
+  'java': {
+    backgroundColor: '#b07219',
+    color: 'white'
+  },
+  'css': {
+    backgroundColor: '#563d7c',
+    color: 'white'
+  },
+  'processing': {
+    backgroundColor: '#0096D8',
+    color: 'white'
+  },
+  'python': {
+    backgroundColor: '#3572A5',
+    color: 'white'
+  },
+  'c#': {
+    backgroundColor: '#178600',
+    color: 'white'
+  },
+  'jupyternotebook': {
+    backgroundColor: '#DA5B0B',
+    color: 'white'
+  },
+  'shell': {
+    backgroundColor: '#89e051',
+    color: 'black'
+  },
+  'html': {
+    backgroundColor: '#e34c26',
+    color: 'white'
+  },
+  'php': {
+    backgroundColor: '#4F5D95',
+    color: 'white'
+  },
+  'typescript': {
+    backgroundColor: '#2b7489',
+    color: 'white'
+  },
+  'vue': {
+    backgroundColor: '#41b883',
+    color: 'white'
+  },
+}
 
 @Component({
   selector: 'app-root',
@@ -23,15 +78,52 @@ export class AppComponent {
     this.className = value;
   }
 
-  search(word: string) {
-    this.word = word;
+  getUserLanguages(repos: any[]) {
+    const valuesFiltered = repos.filter(repo => repo.language);
+    const valuesMapped = valuesFiltered.map(repo => repo.language);
+    const uniques = valuesMapped.filter((value: any, pos: any, self: any) => self.indexOf(value) == pos);
+    const languages = uniques.map((language: any) => {
+      let value = language.replace(' ', '');
+      value = value.toLowerCase();
+      const metadata = languageColors[value];
 
-    this.searchService.usersTest(this.word).pipe(
-      switchMap(response => response.items),
-      concatMap((item: any) => {
-        return this.searchService.getUser(item.login)
-      }),
-    ).subscribe(response => console.log(response));
+      return {
+        label: language,
+        styles: metadata
+      }
+    })
+
+    return languages;
+  }
+
+  async search(word: string) {
+    this.word = word;
+    this.isLoading = true;
+    this.isShowResult = false;
+
+    const users = await firstValueFrom(this.searchService.usersTest(this.word));
+    const usersMapped = [];
+
+    for (let index = 0; index < users.items.length; index++) {
+      const element = users.items[index];
+      const userMapped = await firstValueFrom(this.searchService.getUser(element.login));
+      const userRepos = await firstValueFrom(this.searchService.getUserRepos(element.login));
+      const userLanguages = this.getUserLanguages(userRepos);
+      userMapped.languages = userLanguages;
+
+      usersMapped.push(userMapped);
+    }
+
+    this.results = usersMapped;
+    this.isLoading = false;
+    this.isShowResult = true;
+
+    // this.searchService.usersTest(this.word).pipe(
+    //   switchMap(response => response.items),
+    //   concatMap((item: any) => {
+    //     return this.searchService.getUser(item.login)
+    //   }),
+    // ).subscribe(response => console.log(response));
 
     // this.searchService.usersTest(this.word).subscribe(response => {
     //   const items = response.items.map((item: any) => {

@@ -16,7 +16,7 @@ export class SearchService {
     this.options = {
       headers: new HttpHeaders({
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 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'
+        'Authorization': 'token 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'
       })
     }
   }
@@ -67,6 +67,16 @@ export class SearchService {
     });
   }
 
+  all(term: string): Observable<Array<User | Repository>> {
+    const users$ = this.users(term);
+    const repositories$ = this.repositories(term);
+
+    return users$.pipe(
+      combineLatestWith(repositories$),
+      map(([users, repositories]) => this.orderItemsByName([...users, ...repositories]))
+    );
+  }
+
   usersTest(term: string): Observable<any> {
     const url = `https://api.github.com/search/users?q=${term}&per_page=3`;
 
@@ -81,8 +91,8 @@ export class SearchService {
         return {
           type: 'user',
           avatar_url: user.avatar_url,
-          full_name: user.name,
-          username: user.login,
+          name: user.name,
+          login: user.login,
           followers: user.followers,
           following: user.following,
           repos_url: user.repos_url,
@@ -92,13 +102,9 @@ export class SearchService {
     );
   }
 
-  all(term: string): Observable<Array<User | Repository>> {
-    const users$ = this.users(term);
-    const repositories$ = this.repositories(term);
+  getUserRepos(user: string): Observable<any> {
+    const url = `https://api.github.com/users/${user}/repos`;
 
-    return users$.pipe(
-      combineLatestWith(repositories$),
-      map(([users, repositories]) => this.orderItemsByName([...users, ...repositories]))
-    );
+    return this.httpService.get(url, this.options);
   }
 }
