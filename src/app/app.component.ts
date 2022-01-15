@@ -3,6 +3,7 @@ import { concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap,
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
 import { languageColors } from './languages';
+import { LanguageColorsService } from './services/language-colors.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,10 @@ export class AppComponent {
   private word: string = '';
   public results: Array<User | Repository> = [];
 
-  constructor(private searchService: SearchService) { }
+  constructor(
+    private searchService: SearchService,
+    private langService: LanguageColorsService
+  ) { }
 
   toogleTheme(value: string) {
     this.className = value;
@@ -57,6 +61,16 @@ export class AppComponent {
       const userRepos = await firstValueFrom(this.searchService.getUserRepos(element.login));
       const userLanguages = this.getUserLanguages(userRepos);
       userMapped.languages = userLanguages;
+      userMapped.repos = userRepos.map((repo: any) => {
+        return {
+          full_name: repo.full_name,
+          description: repo.description,
+          html_url: repo.html_url,
+          stargazers_count: repo.stargazers_count,
+          language: this.langService.getLanguageStyle(repo.language),
+          forks_count: repo.forks_count,
+        }
+      })
 
       usersMapped.push(userMapped);
     }
