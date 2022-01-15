@@ -1,5 +1,5 @@
 <mat-selection-list [multiple]="false">
-  <mat-list-option *ngFor="let item of listResults">
+  <mat-list-option *ngFor="let item of listResults" (click)="openDialog(item)">
     <img *ngIf="item.type == 'user'" mat-list-icon class="profile-image" src="{{ item.avatar_url }}" alt="Profile Picture">
     <mat-icon *ngIf="item.type == 'repository'" class="book-icon material-icons-outlined" mat-list-icon>book</mat-icon>
       

@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 import { User, Repository } from '../interfaces';
 
 @Component({
@@ -7,15 +9,17 @@ import { User, Repository } from '../interfaces';
   styleUrls: ['./result-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResultListComponent implements OnInit{
+export class ResultListComponent {
 
   @Input() listResults!: Array<any>;
 
-  ngOnInit(): void {
-    
-  }
+  constructor(private dialog: MatDialog) {}
 
-  ngOnChanges(change: any) {
-    console.log(change);
+  openDialog(item: any) {
+    this.dialog.open(DialogComponent, {
+      maxWidth: '1152px',
+      data: item,
+      panelClass: 'custom-dialog-container'
+    });
   }
 }

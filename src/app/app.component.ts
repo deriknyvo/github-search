@@ -2,61 +2,7 @@ import { Component, HostBinding } from '@angular/core';
 import { concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
-
-const languageColors: any = {
-  'javascript': {
-    backgroundColor: '#f1e05a',
-    color: 'black'
-  },
-  'ruby': {
-    backgroundColor: '#701516',
-    color: 'white'
-  },
-  'java': {
-    backgroundColor: '#b07219',
-    color: 'white'
-  },
-  'css': {
-    backgroundColor: '#563d7c',
-    color: 'white'
-  },
-  'processing': {
-    backgroundColor: '#0096D8',
-    color: 'white'
-  },
-  'python': {
-    backgroundColor: '#3572A5',
-    color: 'white'
-  },
-  'c#': {
-    backgroundColor: '#178600',
-    color: 'white'
-  },
-  'jupyternotebook': {
-    backgroundColor: '#DA5B0B',
-    color: 'white'
-  },
-  'shell': {
-    backgroundColor: '#89e051',
-    color: 'black'
-  },
-  'html': {
-    backgroundColor: '#e34c26',
-    color: 'white'
-  },
-  'php': {
-    backgroundColor: '#4F5D95',
-    color: 'white'
-  },
-  'typescript': {
-    backgroundColor: '#2b7489',
-    color: 'white'
-  },
-  'vue': {
-    backgroundColor: '#41b883',
-    color: 'white'
-  },
-}
+import { languageColors } from './languages';
 
 @Component({
   selector: 'app-root',
@@ -82,6 +28,7 @@ export class AppComponent {
     const valuesFiltered = repos.filter(repo => repo.language);
     const valuesMapped = valuesFiltered.map(repo => repo.language);
     const uniques = valuesMapped.filter((value: any, pos: any, self: any) => self.indexOf(value) == pos);
+
     const languages = uniques.map((language: any) => {
       let value = language.replace(' ', '');
       value = value.toLowerCase();
@@ -117,58 +64,58 @@ export class AppComponent {
     this.results = usersMapped;
     this.isLoading = false;
     this.isShowResult = true;
-
-    // this.searchService.usersTest(this.word).pipe(
-    //   switchMap(response => response.items),
-    //   concatMap((item: any) => {
-    //     return this.searchService.getUser(item.login)
-    //   }),
-    // ).subscribe(response => console.log(response));
-
-    // this.searchService.usersTest(this.word).subscribe(response => {
-    //   const items = response.items.map((item: any) => {
-
-    //     this.searchService.getUserFollowers(item.followers_url).subscribe(response => {
-    //       return {
-    //         type: 'user',
-    //         avatar_url: item.avatar_url,
-    //         full_name: item.login,
-    //         followers: response.length,
-    //         repos_url: item.repos_url
-    //       }
-    //     })
-    //   });
-
-    //   console.log(items);
-    // });
-
-    // this.searchService.usersTest(this.word)
-    // .pipe(
-    //   map(response => response.items.map((item: any) => {
-    //     return {
-    //       type: 'user',
-    //       avatar_url: item.avatar_url,
-    //       full_name: item.login,
-    //       followers_url: item.followers_url,
-    //       repos_url: item.repos_url,
-    //     }
-    //   }))
-    // ).subscribe(response => {
-    //   console.log(response);
-    // });
-
-    // this.isLoading = true;
-    // this.isShowResult = false;
-
-    // this.searchService.all(this.word).subscribe(response => {
-
-    //   const data = response.map(item => {
-    //     const followers = this.searchService.getUserFollowers(item.followers_url);
-    //   })
-
-    //   this.results = response;
-    //   this.isLoading = false;
-    //   this.isShowResult = true;
-    // });
   }
+
+  // this.searchService.usersTest(this.word).pipe(
+  //   switchMap(response => response.items),
+  //   concatMap((item: any) => {
+  //     return this.searchService.getUser(item.login)
+  //   }),
+  // ).subscribe(response => console.log(response));
+
+  // this.searchService.usersTest(this.word).subscribe(response => {
+  //   const items = response.items.map((item: any) => {
+
+  //     this.searchService.getUserFollowers(item.followers_url).subscribe(response => {
+  //       return {
+  //         type: 'user',
+  //         avatar_url: item.avatar_url,
+  //         full_name: item.login,
+  //         followers: response.length,
+  //         repos_url: item.repos_url
+  //       }
+  //     })
+  //   });
+
+  //   console.log(items);
+  // });
+
+  // this.searchService.usersTest(this.word)
+  // .pipe(
+  //   map(response => response.items.map((item: any) => {
+  //     return {
+  //       type: 'user',
+  //       avatar_url: item.avatar_url,
+  //       full_name: item.login,
+  //       followers_url: item.followers_url,
+  //       repos_url: item.repos_url,
+  //     }
+  //   }))
+  // ).subscribe(response => {
+  //   console.log(response);
+  // });
+
+  // this.isLoading = true;
+  // this.isShowResult = false;
+
+  // this.searchService.all(this.word).subscribe(response => {
+
+  //   const data = response.map(item => {
+  //     const followers = this.searchService.getUserFollowers(item.followers_url);
+  //   })
+
+  //   this.results = response;
+  //   this.isLoading = false;
+  //   this.isShowResult = true;
+  // });
 }
