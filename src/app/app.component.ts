@@ -2,7 +2,6 @@ import { Component, HostBinding } from '@angular/core';
 import { concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
-import { languageColors } from './languages';
 import { LanguageColorsService } from './services/language-colors.service';
 
 @Component({
@@ -32,18 +31,7 @@ export class AppComponent {
     const valuesFiltered = repos.filter(repo => repo.language);
     const valuesMapped = valuesFiltered.map(repo => repo.language);
     const uniques = valuesMapped.filter((value: any, pos: any, self: any) => self.indexOf(value) == pos);
-
-    const languages = uniques.map((language: any) => {
-      let value = language.replace(' ', '');
-      value = value.toLowerCase();
-      const metadata = languageColors[value];
-
-      return {
-        label: language,
-        styles: metadata
-      }
-    })
-
+    const languages = uniques.map((language: any) => this.langService.getLanguageStyle(language));
     return languages;
   }
 

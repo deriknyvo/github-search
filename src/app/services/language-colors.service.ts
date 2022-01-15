@@ -15,6 +15,16 @@ export class LanguageColorsService {
 
     const lang = language.replace(' ', '').toLowerCase();
 
+    if (!languageColors[lang]) {
+      return {
+        label: language,
+        styles: {
+          backgroundColor: '#009688',
+          color: 'white'
+        }
+      }
+    }
+
     return {
       label: language,
       styles: languageColors[lang]
