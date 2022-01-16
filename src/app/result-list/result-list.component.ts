@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogUserComponent } from '../dialog-user/dialog-user.component';
 import { User, Repository } from '../interfaces';
 
 @Component({
@@ -16,7 +16,7 @@ export class ResultListComponent {
   constructor(private dialog: MatDialog) {}
 
   openDialog(item: any) {
-    this.dialog.open(DialogComponent, {
+    this.dialog.open(DialogUserComponent, {
       maxHeight: '600px',
       maxWidth: '1152px',
       data: item,

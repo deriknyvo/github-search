@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { combineLatestWith, firstValueFrom, map, Observable } from 'rxjs';
 import { Repository, RepositoryRequest, User, UserRequest } from '../interfaces';
-import { LanguageColorsService } from './language-colors.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +11,12 @@ export class SearchService {
   private options;
 
   constructor(
-    private httpService: HttpClient,
-    private langService: LanguageColorsService
+    private httpService: HttpClient
   ) {
     this.options = {
       headers: new HttpHeaders({
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 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'
+        'Authorization': 'token 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'
       })
     }
   }
