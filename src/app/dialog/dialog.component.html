@@ -1,1 +1,49 @@
-<p>dialog works!</p>
+<div class="container">
+    <div class="infos">
+        <img [src]="data.avatar_url" alt="User Image">
+        <h1 class="name">{{ data.name }}</h1>
+        <p class="username">{{ data.login }}</p>
+
+        <p class="bio">
+            {{ data.bio }}
+        </p>
+
+        <div class="followers">
+            <mat-icon class="followers-icon">peoples</mat-icon>
+            <span>{{ data.followers }} seguidores · {{ data.following }} seguindo</span>
+        </div>
+    </div>
+
+    <div class="repositories" *ngIf="data.repos.length > 0">
+        <p class="title">Repositórios</p>
+
+        <div class="cards-repositories">
+            <mat-card *ngFor="let repo of data.repos">
+                <a target="_blank" [href]="repo.html_url">{{ repo.full_name }}</a>
+                
+                <p>
+                    {{ repo.description }}
+                </p>
+    
+                <div class="repo-infos">
+                    <mat-chip-list *ngIf="repo.language">
+                        <mat-chip 
+                            [ngStyle]="{ backgroundColor: repo.language.styles.backgroundColor, color: repo.language.styles.color }" selected>
+                            {{ repo.language.label }}
+                        </mat-chip>
+                    </mat-chip-list>
+        
+                    <div class="stars">
+                        <mat-icon class="icon">star_outline</mat-icon>
+                        <span>{{ repo.stargazers_count }}</span>
+                    </div>
+        
+                    <div class="forks">
+                        <mat-icon class="icon">device_hub</mat-icon>
+                        <span>{{ repo.forks_count }}</span>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

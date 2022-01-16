@@ -1,7 +1,8 @@
 import { Component, HostBinding } from '@angular/core';
-import { concatMap, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
+import { concat, concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
+import { LanguageColorsService } from './services/language-colors.service';
 
 @Component({
   selector: 'app-root',
@@ -16,67 +17,101 @@ export class AppComponent {
   public isShowResult: boolean = false;
   private word: string = '';
   public results: Array<User | Repository> = [];
+  private storageResults: Array<User | Repository> = [];
 
-  constructor(private searchService: SearchService) { }
+  constructor(
+    private searchService: SearchService,
+    private langService: LanguageColorsService
+  ) { }
 
   toogleTheme(value: string) {
     this.className = value;
   }
 
+  getUserLanguages(repos: any[]) {
+    const valuesFiltered = repos.filter(repo => repo.language);
+    const valuesMapped = valuesFiltered.map(repo => repo.language);
+    const uniques = valuesMapped.filter((value: any, pos: any, self: any) => self.indexOf(value) == pos);
+    const languages = uniques.map((language: any) => this.langService.getLanguageStyle(language));
+
+    return languages;
+  }
+
   search(word: string) {
     this.word = word;
+    this.isLoading = true;
+    this.isShowResult = false;
 
-    this.searchService.usersTest(this.word).pipe(
-      switchMap(response => response.items),
-      concatMap((item: any) => {
-        return this.searchService.getUser(item.login)
-      }),
-    ).subscribe(response => console.log(response));
+    this.users().then(users => {
+      this.repositories().then(repositories => {
+        const arrConcat = [].concat(...users, ...repositories);
 
-    // this.searchService.usersTest(this.word).subscribe(response => {
-    //   const items = response.items.map((item: any) => {
+        this.results = this.searchService.orderItemsByName(arrConcat);
+        this.storageResults = this.results;
+        this.isLoading = false;
+        this.isShowResult = true;
+      });
+    });
+  }
 
-    //     this.searchService.getUserFollowers(item.followers_url).subscribe(response => {
-    //       return {
-    //         type: 'user',
-    //         avatar_url: item.avatar_url,
-    //         full_name: item.login,
-    //         followers: response.length,
-    //         repos_url: item.repos_url
-    //       }
-    //     })
-    //   });
+  async users() {
+    const users = await firstValueFrom(this.searchService.usersTemp(this.word));
+    const usersMapped = [];
 
-    //   console.log(items);
-    // });
+    for (let index = 0; index < users.items.length; index++) {
+      const element = users.items[index];
+      const userMapped = await firstValueFrom(this.searchService.getUser(element.login));
+      const userRepos = await firstValueFrom(this.searchService.getUserRepos(element.login));
+      const userLanguages = this.getUserLanguages(userRepos);
 
-    // this.searchService.usersTest(this.word)
-    // .pipe(
-    //   map(response => response.items.map((item: any) => {
-    //     return {
-    //       type: 'user',
-    //       avatar_url: item.avatar_url,
-    //       full_name: item.login,
-    //       followers_url: item.followers_url,
-    //       repos_url: item.repos_url,
-    //     }
-    //   }))
-    // ).subscribe(response => {
-    //   console.log(response);
-    // });
+      userMapped.languages = userLanguages;
 
-    // this.isLoading = true;
-    // this.isShowResult = false;
+      userMapped.repos = userRepos.map((repo: any) => {
+        return {
+          full_name: repo.full_name,
+          description: repo.description,
+          html_url: repo.html_url,
+          stargazers_count: repo.stargazers_count,
+          language: this.langService.getLanguageStyle(repo.language),
+          forks_count: repo.forks_count,
+        }
+      })
 
-    // this.searchService.all(this.word).subscribe(response => {
+      usersMapped.push(userMapped);
+    }
 
-    //   const data = response.map(item => {
-    //     const followers = this.searchService.getUserFollowers(item.followers_url);
-    //   })
+    return usersMapped;
+  }
 
-    //   this.results = response;
-    //   this.isLoading = false;
-    //   this.isShowResult = true;
-    // });
+  async repositories() {
+    const repositories = await firstValueFrom(this.searchService.repositoriesTemp(this.word));
+
+    for (let index = 0; index < repositories.length; index++) {
+      const element = repositories[index];
+      const languages = await firstValueFrom(this.searchService.getRepoLanguages(element.languages_url));
+      const style = Object.keys(languages).map(key => this.langService.getLanguageStyle(key));
+
+      element.languages = style;
+    }
+
+    return repositories;
+  }
+
+  filter(values: any[]) {
+    this.isLoading = true;
+    this.isShowResult = false;
+
+    const isAllTrue = values.every(value => value.selected);
+    const isAllFalse = values.every(value => !value.selected);
+
+    if (isAllTrue || isAllFalse) {
+      this.results = this.storageResults;
+    } else {
+      const filterSelected = values.filter(value => value.selected);
+      this.results = this.storageResults.filter(item => item.type == filterSelected[0].id);
+    }
+
+    this.isLoading = false;
+    this.isShowResult = true;
   }
 }

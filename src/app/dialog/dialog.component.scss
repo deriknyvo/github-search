@@ -1,0 +1,109 @@
+.container {
+    display: flex;
+    gap: 32px;
+    max-height: calc(600px - 80px);
+}
+
+.infos {
+    width: 230px;
+    min-width: 230px;
+
+    .name {
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    .username {
+        font-size: 16px;
+        color: var(--followers-text-color);
+    }
+
+    .followers {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--followers-text-color);
+    }
+}
+
+img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.repositories {
+    flex-grow: 1;
+    overflow: auto;
+    padding: 10px;
+
+    .title {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+}
+
+.repositories::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: var(--scrollbar-background);
+}
+
+.repositories::-webkit-scrollbar {
+    border-radius: 8px;
+    width: 8px;
+    background-color: var(--scrollbar-background);
+}
+
+.repositories::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #009688;
+}
+
+.cards-repositories {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    mat-card {
+        flex: 1 0 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    a {
+        font-size: 16px;
+        font-weight: 500;
+        word-break: break-word;
+        color: var(--links-text-color);
+    }
+    
+    p {
+        margin-top: 14px;
+        word-break: break-word;
+        color: var(--followers-text-color);
+    }
+
+    mat-chip {
+        font-size: 12px;
+        min-height: 16px;
+    }
+
+    .repo-infos {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+}
+
+.stars, .forks {
+    color: var(--followers-text-color);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
