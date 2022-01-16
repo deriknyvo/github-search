@@ -12,6 +12,7 @@ export class SearchInputComponent {
   
   @ViewChild(MatInput) input!: MatInput;
   @Output() searchWord = new EventEmitter();
+  @Output() filters = new EventEmitter();
 
   public word = new FormControl();
 
@@ -22,5 +23,4 @@ export class SearchInputComponent {
   search() {
     this.searchWord.emit(this.word.value);
   }
-
 }

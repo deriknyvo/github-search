@@ -1,13 +1,14 @@
 <mat-selection-list [multiple]="false">
-  <mat-list-option *ngFor="let item of listResults">
+  <mat-list-option *ngFor="let item of listResults" (click)="openDialog(item)">
     <img *ngIf="item.type == 'user'" mat-list-icon class="profile-image" src="{{ item.avatar_url }}" alt="Profile Picture">
     <mat-icon *ngIf="item.type == 'repository'" class="book-icon material-icons-outlined" mat-list-icon>book</mat-icon>
       
-    <div class="name" mat-line>{{ item.full_name }}</div>
+    <div *ngIf="item.type == 'user'" class="name" mat-line>{{ item.login }}</div>
+    <div *ngIf="item.type == 'repository'" class="name" mat-line>{{ item.full_name }}</div>
       
     <div *ngIf="item.type == 'user'" mat-line class="followers">
       <mat-icon class="followers-icon">peoples</mat-icon>
-      <span>5 seguidores</span>
+      <span>{{ item.followers }} seguidores · {{ item.following }} seguindo</span>
     </div>
 
     <div *ngIf="item.type == 'repository' && item.stars" mat-line class="stars">
@@ -15,10 +16,14 @@
       <span>{{ item.stars }}</span>
     </div>
   
-    <div mat-line *ngIf="item.language">
+    <div mat-line>
       <div class="languages">
         <mat-chip-list class="user-languages">
-          <mat-chip color="primary" selected>{{ item.language }}</mat-chip>
+          <mat-chip *ngFor="let language of item.languages" 
+            [ngStyle]="{ backgroundColor: language.styles.backgroundColor, color: language.styles.color }"
+            selected>
+            {{ language.label }}
+          </mat-chip>
         </mat-chip-list>
       </div>
     </div>

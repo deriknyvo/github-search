@@ -3,12 +3,12 @@ import { Filter } from 'src/app/interfaces';
 
 const filtersMock: Filter[] = [
   {
-    id: 'users',
+    id: 'user',
     selected: false,
     label: 'Usuários'
   },
   {
-    id: 'repositories',
+    id: 'repository',
     selected: false,
     label: 'Repositórios'
   }

@@ -12,5 +12,5 @@
       </button>
     </mat-form-field>
 
-    <app-filters></app-filters>
+    <app-filters (selectedFilters)="this.filters.emit($event)"></app-filters>
 </form>

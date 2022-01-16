@@ -12,12 +12,10 @@ import { ResultListModule } from './result-list/result-list.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
-import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogComponent,
   ],
   imports: [
     BrowserModule,

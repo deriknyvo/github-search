@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { combineLatestWith, map, Observable } from 'rxjs';
+import { combineLatestWith, firstValueFrom, map, Observable } from 'rxjs';
 import { Repository, RepositoryRequest, User, UserRequest } from '../interfaces';
+import { LanguageColorsService } from './language-colors.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,13 @@ export class SearchService {
   private options;
 
   constructor(
-    private httpService: HttpClient
+    private httpService: HttpClient,
+    private langService: LanguageColorsService
   ) {
     this.options = {
       headers: new HttpHeaders({
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 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'
+        'Authorization': 'token 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'
       })
     }
   }
@@ -53,13 +55,13 @@ export class SearchService {
     );
   }
 
-  private orderItemsByName(items: Array<User | Repository>) {
+  orderItemsByName(items: Array<User | Repository | any>) {
     return items.sort((a, b) => {
-      if (a.full_name < b.full_name) {
+      if ((a.login || a.full_name) < (b.full_name || b.login)) {
         return -1
       }
 
-      if (a.full_name > b.full_name) {
+      if ((a.login || a.full_name) > (b.full_name || b.login)) {
         return 1
       }
 
@@ -67,8 +69,18 @@ export class SearchService {
     });
   }
 
-  usersTest(term: string): Observable<any> {
-    const url = `https://api.github.com/search/users?q=${term}&per_page=3`;
+  all(term: string): Observable<Array<User | Repository>> {
+    const users$ = this.users(term);
+    const repositories$ = this.repositories(term);
+
+    return users$.pipe(
+      combineLatestWith(repositories$),
+      map(([users, repositories]) => this.orderItemsByName([...users, ...repositories]))
+    );
+  }
+
+  usersTemp(term: string): Observable<any> {
+    const url = `https://api.github.com/search/users?q=${term}&per_page=5`;
 
     return this.httpService.get(url, this.options);
   }
@@ -81,8 +93,8 @@ export class SearchService {
         return {
           type: 'user',
           avatar_url: user.avatar_url,
-          full_name: user.name,
-          username: user.login,
+          name: user.name,
+          login: user.login,
           followers: user.followers,
           following: user.following,
           repos_url: user.repos_url,
@@ -92,13 +104,29 @@ export class SearchService {
     );
   }
 
-  all(term: string): Observable<Array<User | Repository>> {
-    const users$ = this.users(term);
-    const repositories$ = this.repositories(term);
+  getUserRepos(user: string): Observable<any> {
+    const url = `https://api.github.com/users/${user}/repos`;
 
-    return users$.pipe(
-      combineLatestWith(repositories$),
-      map(([users, repositories]) => this.orderItemsByName([...users, ...repositories]))
+    return this.httpService.get(url, this.options);
+  }
+
+  repositoriesTemp(term: string): Observable<any> {
+    const url = `https://api.github.com/search/repositories?q=${term}&per_page=5`;
+
+    return this.httpService.get(url, this.options).pipe(
+      map((response: any) => response.items.map((item: any) => {
+        return {
+          type: 'repository',
+          full_name: item.full_name,
+          description: item.description,
+          stars: item.stargazers_count,
+          languages_url: item.languages_url
+        }
+      }))
     );
+  }
+
+  getRepoLanguages(url: string): Observable<any> {
+    return this.httpService.get(url, this.options);
   }
 }
