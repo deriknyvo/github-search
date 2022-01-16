@@ -5,7 +5,8 @@
   
   <main class="mat-app-background">
     <app-search-input 
-      (searchWord)="search($event)">
+      (searchWord)="search($event)"
+      (filters)="filter($event)">
     </app-search-input>
 
     <div class="result">

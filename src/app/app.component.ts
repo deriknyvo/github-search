@@ -17,6 +17,7 @@ export class AppComponent {
   public isShowResult: boolean = false;
   private word: string = '';
   public results: Array<User | Repository> = [];
+  private storageResults: Array<User | Repository> = [];
 
   constructor(
     private searchService: SearchService,
@@ -32,6 +33,7 @@ export class AppComponent {
     const valuesMapped = valuesFiltered.map(repo => repo.language);
     const uniques = valuesMapped.filter((value: any, pos: any, self: any) => self.indexOf(value) == pos);
     const languages = uniques.map((language: any) => this.langService.getLanguageStyle(language));
+
     return languages;
   }
 
@@ -43,7 +45,9 @@ export class AppComponent {
     this.users().then(users => {
       this.repositories().then(repositories => {
         const arrConcat = [].concat(...users, ...repositories);
+
         this.results = this.searchService.orderItemsByName(arrConcat);
+        this.storageResults = this.results;
         this.isLoading = false;
         this.isShowResult = true;
       });
@@ -59,7 +63,9 @@ export class AppComponent {
       const userMapped = await firstValueFrom(this.searchService.getUser(element.login));
       const userRepos = await firstValueFrom(this.searchService.getUserRepos(element.login));
       const userLanguages = this.getUserLanguages(userRepos);
+
       userMapped.languages = userLanguages;
+
       userMapped.repos = userRepos.map((repo: any) => {
         return {
           full_name: repo.full_name,
@@ -84,9 +90,28 @@ export class AppComponent {
       const element = repositories[index];
       const languages = await firstValueFrom(this.searchService.getRepoLanguages(element.languages_url));
       const style = Object.keys(languages).map(key => this.langService.getLanguageStyle(key));
+
       element.languages = style;
     }
 
     return repositories;
+  }
+
+  filter(values: any[]) {
+    this.isLoading = true;
+    this.isShowResult = false;
+
+    const isAllTrue = values.every(value => value.selected);
+    const isAllFalse = values.every(value => !value.selected);
+
+    if (isAllTrue || isAllFalse) {
+      this.results = this.storageResults;
+    } else {
+      const filterSelected = values.filter(value => value.selected);
+      this.results = this.storageResults.filter(item => item.type == filterSelected[0].id);
+    }
+
+    this.isLoading = false;
+    this.isShowResult = true;
   }
 }
