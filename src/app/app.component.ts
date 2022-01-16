@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
+import { concat, concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
 import { LanguageColorsService } from './services/language-colors.service';
@@ -35,12 +35,23 @@ export class AppComponent {
     return languages;
   }
 
-  async search(word: string) {
+  search(word: string) {
     this.word = word;
     this.isLoading = true;
     this.isShowResult = false;
 
-    const users = await firstValueFrom(this.searchService.usersTest(this.word));
+    this.users().then(users => {
+      this.repositories().then(repositories => {
+        const arrConcat = [].concat(...users, ...repositories);
+        this.results = this.searchService.orderItemsByName(arrConcat);
+        this.isLoading = false;
+        this.isShowResult = true;
+      });
+    });
+  }
+
+  async users() {
+    const users = await firstValueFrom(this.searchService.usersTemp(this.word));
     const usersMapped = [];
 
     for (let index = 0; index < users.items.length; index++) {
@@ -63,61 +74,19 @@ export class AppComponent {
       usersMapped.push(userMapped);
     }
 
-    this.results = usersMapped;
-    this.isLoading = false;
-    this.isShowResult = true;
+    return usersMapped;
   }
 
-  // this.searchService.usersTest(this.word).pipe(
-  //   switchMap(response => response.items),
-  //   concatMap((item: any) => {
-  //     return this.searchService.getUser(item.login)
-  //   }),
-  // ).subscribe(response => console.log(response));
+  async repositories() {
+    const repositories = await firstValueFrom(this.searchService.repositoriesTemp(this.word));
 
-  // this.searchService.usersTest(this.word).subscribe(response => {
-  //   const items = response.items.map((item: any) => {
+    for (let index = 0; index < repositories.length; index++) {
+      const element = repositories[index];
+      const languages = await firstValueFrom(this.searchService.getRepoLanguages(element.languages_url));
+      const style = Object.keys(languages).map(key => this.langService.getLanguageStyle(key));
+      element.languages = style;
+    }
 
-  //     this.searchService.getUserFollowers(item.followers_url).subscribe(response => {
-  //       return {
-  //         type: 'user',
-  //         avatar_url: item.avatar_url,
-  //         full_name: item.login,
-  //         followers: response.length,
-  //         repos_url: item.repos_url
-  //       }
-  //     })
-  //   });
-
-  //   console.log(items);
-  // });
-
-  // this.searchService.usersTest(this.word)
-  // .pipe(
-  //   map(response => response.items.map((item: any) => {
-  //     return {
-  //       type: 'user',
-  //       avatar_url: item.avatar_url,
-  //       full_name: item.login,
-  //       followers_url: item.followers_url,
-  //       repos_url: item.repos_url,
-  //     }
-  //   }))
-  // ).subscribe(response => {
-  //   console.log(response);
-  // });
-
-  // this.isLoading = true;
-  // this.isShowResult = false;
-
-  // this.searchService.all(this.word).subscribe(response => {
-
-  //   const data = response.map(item => {
-  //     const followers = this.searchService.getUserFollowers(item.followers_url);
-  //   })
-
-  //   this.results = response;
-  //   this.isLoading = false;
-  //   this.isShowResult = true;
-  // });
+    return repositories;
+  }
 }
