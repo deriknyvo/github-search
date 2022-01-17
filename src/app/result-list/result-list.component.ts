@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRepositoryComponent } from '../dialog-repository/dialog-repository.component';
 import { DialogUserComponent } from '../dialog-user/dialog-user.component';
-import { User, Repository } from '../interfaces';
 
 @Component({
   selector: 'app-result-list',
@@ -33,5 +32,20 @@ export class ResultListComponent {
 
   ngOnChanges(changes: any) {
     console.log(changes);
+  }
+
+  favorite(event: any, item: any) {
+    event.stopPropagation();
+    console.log(item);
+  }
+
+  unfavorite(event: any, item: any) {
+    event.stopPropagation();
+    console.log(item);
+  }
+
+  archive(event: any, item: any) {
+    event.stopPropagation();
+    console.log(item);
   }
 }

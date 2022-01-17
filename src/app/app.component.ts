@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { concat, concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
 import { LanguageColorsService } from './services/language-colors.service';
@@ -121,7 +121,7 @@ export class AppComponent {
   }
 
   async users(page: number) {
-    const users = await firstValueFrom(this.searchService.usersTemp(this.word, page));
+    const users = await firstValueFrom(this.searchService.users(this.word, page));
 
     return await this.formatUsers(users);
   }
@@ -139,7 +139,7 @@ export class AppComponent {
   }
 
   async repositories(page: number) {
-    const repositories = await firstValueFrom(this.searchService.repositoriesTemp(this.word, page));
+    const repositories = await firstValueFrom(this.searchService.repositories(this.word, page));
 
     return await this.formatRepositories(repositories);
   }
