@@ -7,13 +7,29 @@
     <div *ngIf="item.type == 'repository'" class="name" mat-line>{{ item.full_name }}</div>
       
     <div *ngIf="item.type == 'user'" mat-line class="followers">
-      <mat-icon class="followers-icon">peoples</mat-icon>
-      <span>{{ item.followers }} seguidores · {{ item.following }} seguindo</span>
+      <div class="numbers">
+        <mat-icon class="followers-icon">peoples</mat-icon>
+        <span>{{ item.followers }} seguidores · {{ item.following }} seguindo</span>
+      </div>
+
+      <div class="icons">
+        <mat-icon *ngIf="!item.favorite" (click)="favorite($event, item)">favorite_border</mat-icon>
+        <mat-icon *ngIf="item.favorite" (click)="unfavorite($event, item)">favorite</mat-icon>
+        <mat-icon *ngIf="!item.archived" (click)="archive($event, item)">archive</mat-icon>
+      </div>
     </div>
 
     <div *ngIf="item.type == 'repository' && item.stars" mat-line class="stars">
-      <mat-icon class="stars-icon">star_outline</mat-icon>
-      <span>{{ item.stars }}</span>
+      <div class="numbers">
+        <mat-icon class="stars-icon">star_outline</mat-icon>
+        <span>{{ item.stars }}</span>
+      </div>
+
+      <div class="icons">
+        <mat-icon *ngIf="!item.favorite" (click)="favorite($event, item)">favorite_border</mat-icon>
+        <mat-icon *ngIf="item.favorite" (click)="unfavorite($event, item)">favorite</mat-icon>
+        <mat-icon *ngIf="!item.archived" (click)="archive($event, item)">archive</mat-icon>
+      </div>
     </div>
   
     <div mat-line>

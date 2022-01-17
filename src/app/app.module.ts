@@ -10,6 +10,7 @@ import { SearchInputModule } from './search-input/search-input.module';
 import { ResultListModule } from './result-list/result-list.module';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 
@@ -27,7 +28,8 @@ import { AppComponent } from './app.component';
     ToolbarModule,
     SearchInputModule,
     ResultListModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
