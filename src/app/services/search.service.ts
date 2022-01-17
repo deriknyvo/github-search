@@ -77,8 +77,8 @@ export class SearchService {
     );
   }
 
-  usersTemp(term: string): Observable<any> {
-    const url = `https://api.github.com/search/users?q=${term}&per_page=2`;
+  usersTemp(term: string, page: number): Observable<any> {
+    const url = `https://api.github.com/search/users?q=${term}&page=${page}&per_page=3`;
 
     return this.httpService.get(url, this.options);
   }
@@ -109,7 +109,7 @@ export class SearchService {
   }
 
   repositoriesTemp(term: string): Observable<any> {
-    const url = `https://api.github.com/search/repositories?q=${term}&per_page=2`;
+    const url = `https://api.github.com/search/repositories?q=${term}&per_page=3`;
 
     return this.httpService.get(url, this.options).pipe(
       map((response: any) => response.items.map((item: any) => {
