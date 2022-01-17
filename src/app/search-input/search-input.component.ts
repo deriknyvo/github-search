@@ -23,4 +23,9 @@ export class SearchInputComponent {
   search() {
     this.searchWord.emit(this.word.value);
   }
+
+  clear() {
+    this.word.setValue('');
+    this.searchWord.emit(this.word.value);
+  }
 }
