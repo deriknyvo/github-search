@@ -9,7 +9,7 @@
       (filters)="filter($event)">
     </app-search-input>
 
-    <div class="result">
+    <div class="result" (scroll)="scrollEnd($event.target)">
       <div *ngIf="isLoading" class="loading">
         <mat-spinner diameter="50"></mat-spinner>
       </div>

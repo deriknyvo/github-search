@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResultListComponent } from './result-list.component';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogUserComponent } from '../dialog-user/dialog-user.component';
+import { DialogRepositoryComponent } from '../dialog-repository/dialog-repository.component';
 
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +13,8 @@ import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     ResultListComponent,
-    DialogComponent
+    DialogUserComponent,
+    DialogRepositoryComponent
   ],
   imports: [
     CommonModule,

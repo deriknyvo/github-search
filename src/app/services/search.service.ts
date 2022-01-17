@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { combineLatestWith, firstValueFrom, map, Observable } from 'rxjs';
 import { Repository, RepositoryRequest, User, UserRequest } from '../interfaces';
-import { LanguageColorsService } from './language-colors.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +11,12 @@ export class SearchService {
   private options;
 
   constructor(
-    private httpService: HttpClient,
-    private langService: LanguageColorsService
+    private httpService: HttpClient
   ) {
     this.options = {
       headers: new HttpHeaders({
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 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'
+        'Authorization': 'token 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'
       })
     }
   }
@@ -79,8 +77,8 @@ export class SearchService {
     );
   }
 
-  usersTemp(term: string): Observable<any> {
-    const url = `https://api.github.com/search/users?q=${term}&per_page=5`;
+  usersTemp(term: string, page: number): Observable<any> {
+    const url = `https://api.github.com/search/users?q=${term}&page=${page}&per_page=3`;
 
     return this.httpService.get(url, this.options);
   }
@@ -111,7 +109,7 @@ export class SearchService {
   }
 
   repositoriesTemp(term: string): Observable<any> {
-    const url = `https://api.github.com/search/repositories?q=${term}&per_page=5`;
+    const url = `https://api.github.com/search/repositories?q=${term}&per_page=3`;
 
     return this.httpService.get(url, this.options).pipe(
       map((response: any) => response.items.map((item: any) => {
@@ -120,7 +118,11 @@ export class SearchService {
           full_name: item.full_name,
           description: item.description,
           stars: item.stargazers_count,
-          languages_url: item.languages_url
+          languages_url: item.languages_url,
+          license: item.license,
+          owner: item.owner,
+          watchers_count: item.watchers_count,
+          html_url: item.html_url
         }
       }))
     );
