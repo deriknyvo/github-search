@@ -20,6 +20,21 @@
     margin-bottom: 3px !important;
 }
 
+.followers, .stars {
+    justify-content: space-between;
+
+    .numbers {
+        display: flex;
+        gap: 6px;
+    }
+
+    .icons {
+        mat-icon {
+            margin: 0 2px;
+        }
+    }
+}
+
 .stars {
     gap: 4px;
 }

@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { concat, concatMap, firstValueFrom, map, mergeAll, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
 import { LanguageColorsService } from './services/language-colors.service';
@@ -14,10 +14,14 @@ export class AppComponent {
   @HostBinding('class') className = '';
 
   public isLoading: boolean = false;
+  public isLoadingMore: boolean = false;
   public isShowResult: boolean = false;
+  public isShowButtonLoadMore: boolean = false;
   private word: string = '';
-  public results: Array<User | Repository> = [];
+  public results: Array<User | Repository | any> = [];
   private storageResults: Array<User | Repository> = [];
+  private page = 1;
+  private filters: any[] = [];
 
   constructor(
     private searchService: SearchService,
@@ -26,6 +30,57 @@ export class AppComponent {
 
   toogleTheme(value: string) {
     this.className = value;
+  }
+
+  search(word: string): any {
+    if (!word) {
+      return false;
+    }
+
+    this.word = word;
+    this.isLoading = true;
+    this.isShowResult = false;
+    this.page = 1;
+
+    this.users(this.page).then(users => {
+      this.repositories(this.page).then(repositories => {
+        const arrConcat = [].concat(...users, ...repositories);
+
+        this.results = this.searchService.orderItemsByName(arrConcat);
+        this.storageResults = this.results;
+        this.isLoading = false;
+        this.isShowResult = true;
+
+        if (users.length < 3 || repositories.length < 3) {
+          this.isShowButtonLoadMore = false;
+        } else {
+          this.isShowButtonLoadMore = true;
+        }
+      });
+    });
+  }
+
+  private filter(values: any[]): any { 
+    const isAllTrue = values.every(value => value.selected);
+    const isAllFalse = values.every(value => !value.selected);
+
+    if (isAllTrue || isAllFalse) {
+      return this.storageResults;
+    }
+
+    const filterSelected = values.filter(value => value.selected);
+    return this.storageResults.filter(item => item.type == filterSelected[0].id);
+  }
+
+  applyFilter(values: any[]) {
+    this.filters = values;
+    this.isLoading = true;
+    this.isShowResult = false;
+
+    this.results = this.filter(values);
+
+    this.isLoading = false;
+    this.isShowResult = true;
   }
 
   getUserLanguages(repos: any[]) {
@@ -37,25 +92,7 @@ export class AppComponent {
     return languages;
   }
 
-  search(word: string) {
-    this.word = word;
-    this.isLoading = true;
-    this.isShowResult = false;
-
-    this.users().then(users => {
-      this.repositories().then(repositories => {
-        const arrConcat = [].concat(...users, ...repositories);
-
-        this.results = this.searchService.orderItemsByName(arrConcat);
-        this.storageResults = this.results;
-        this.isLoading = false;
-        this.isShowResult = true;
-      });
-    });
-  }
-
-  async users() {
-    const users = await firstValueFrom(this.searchService.usersTemp(this.word, 1));
+  async formatUsers(users: any) {
     const usersMapped = [];
 
     for (let index = 0; index < users.items.length; index++) {
@@ -83,9 +120,13 @@ export class AppComponent {
     return usersMapped;
   }
 
-  async repositories() {
-    const repositories = await firstValueFrom(this.searchService.repositoriesTemp(this.word));
+  async users(page: number) {
+    const users = await firstValueFrom(this.searchService.users(this.word, page));
 
+    return await this.formatUsers(users);
+  }
+
+  async formatRepositories(repositories: any) {
     for (let index = 0; index < repositories.length; index++) {
       const element = repositories[index];
       const languages = await firstValueFrom(this.searchService.getRepoLanguages(element.languages_url));
@@ -97,28 +138,35 @@ export class AppComponent {
     return repositories;
   }
 
-  filter(values: any[]) {
-    this.isLoading = true;
-    this.isShowResult = false;
+  async repositories(page: number) {
+    const repositories = await firstValueFrom(this.searchService.repositories(this.word, page));
 
-    const isAllTrue = values.every(value => value.selected);
-    const isAllFalse = values.every(value => !value.selected);
-
-    if (isAllTrue || isAllFalse) {
-      this.results = this.storageResults;
-    } else {
-      const filterSelected = values.filter(value => value.selected);
-      this.results = this.storageResults.filter(item => item.type == filterSelected[0].id);
-    }
-
-    this.isLoading = false;
-    this.isShowResult = true;
+    return await this.formatRepositories(repositories);
   }
 
-  scrollEnd(element: any) {
+  loadMore() {
+    this.page++;
+    this.isLoadingMore = true;
+    this.isShowButtonLoadMore = false;
 
-    if ((element.offsetHeight + element.scrollTop) === element.scrollHeight) {
-      console.log('teste');
-    }
+    this.users(this.page).then(users => {
+      this.repositories(this.page).then(repositories => {
+        const arrConcat = [].concat(...users, ...repositories);
+
+        this.storageResults = [
+          ...this.storageResults,
+          ...this.searchService.orderItemsByName(arrConcat)
+        ];
+
+        this.results = this.filter(this.filters);
+        this.isLoadingMore = false;
+
+        if (users.length < 3 || repositories.length < 3) {
+          this.isShowButtonLoadMore = false;
+        } else {
+          this.isShowButtonLoadMore = true;
+        }
+      });
+    });
   }
 }
