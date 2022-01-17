@@ -13,9 +13,10 @@
       </div>
 
       <div class="icons">
-        <mat-icon *ngIf="!item.favorite" (click)="favorite($event, item)">favorite_border</mat-icon>
-        <mat-icon *ngIf="item.favorite" (click)="unfavorite($event, item)">favorite</mat-icon>
-        <mat-icon *ngIf="!item.archived" (click)="archive($event, item)">archive</mat-icon>
+        <mat-icon matTooltip="Gostei" *ngIf="!item.favorite" (click)="favorite($event, item)">favorite_border</mat-icon>
+        <mat-icon matTooltip="Não gostei" class="favorite" *ngIf="item.favorite" (click)="unfavorite($event, item)">favorite</mat-icon>
+        <mat-icon matTooltip="Arquivar" *ngIf="!item.archived" (click)="archive($event, item)">archive</mat-icon>
+        <mat-icon matTooltip="Desarquivar" *ngIf="item.archived" (click)="unarchive($event, item)">unarchive</mat-icon>
       </div>
     </div>
 
@@ -26,9 +27,10 @@
       </div>
 
       <div class="icons">
-        <mat-icon *ngIf="!item.favorite" (click)="favorite($event, item)">favorite_border</mat-icon>
-        <mat-icon *ngIf="item.favorite" (click)="unfavorite($event, item)">favorite</mat-icon>
-        <mat-icon *ngIf="!item.archived" (click)="archive($event, item)">archive</mat-icon>
+        <mat-icon matTooltip="Gostei" *ngIf="!item.favorite" (click)="favorite($event, item)">favorite_border</mat-icon>
+        <mat-icon matTooltip="Não gostei" class="favorite" *ngIf="item.favorite" (click)="unfavorite($event, item)">favorite</mat-icon>
+        <mat-icon matTooltip="Arquivar" *ngIf="!item.archived" (click)="archive($event, item)">archive</mat-icon>
+        <mat-icon matTooltip="Desarquivar" *ngIf="item.archived" (click)="unarchive($event, item)">unarchive</mat-icon>
       </div>
     </div>
   

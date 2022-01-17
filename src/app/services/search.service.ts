@@ -15,7 +15,7 @@ export class SearchService {
     this.options = {
       headers: new HttpHeaders({
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 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'
+        'Authorization': 'token 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'
       })
     }
   }
@@ -41,6 +41,7 @@ export class SearchService {
           owner: item.owner,
           watchers_count: item.watchers_count,
           html_url: item.html_url,
+          id: item.id,
           archived: false,
           favorite: false
         }
@@ -62,6 +63,7 @@ export class SearchService {
           following: user.following,
           repos_url: user.repos_url,
           bio: user.bio,
+          id: user.id,
           archived: false,
           favorite: false
         }
