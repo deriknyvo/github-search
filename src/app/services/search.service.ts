@@ -16,7 +16,7 @@ export class SearchService {
     this.options = {
       headers: new HttpHeaders({
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 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'
+        'Authorization': 'token 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'
       })
     }
   }
@@ -108,8 +108,8 @@ export class SearchService {
     return this.httpService.get(url, this.options);
   }
 
-  repositoriesTemp(term: string): Observable<any> {
-    const url = `https://api.github.com/search/repositories?q=${term}&per_page=3`;
+  repositoriesTemp(term: string, page: number): Observable<any> {
+    const url = `https://api.github.com/search/repositories?q=${term}&page=${page}&per_page=3`;
 
     return this.httpService.get(url, this.options).pipe(
       map((response: any) => response.items.map((item: any) => {

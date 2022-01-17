@@ -6,16 +6,24 @@
   <main class="mat-app-background">
     <app-search-input 
       (searchWord)="search($event)"
-      (filters)="filter($event)">
+      (filters)="applyFilter($event)">
     </app-search-input>
 
-    <div class="result" (scroll)="scrollEnd($event.target)">
+    <div class="result">
       <div *ngIf="isLoading" class="loading">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
 
       <div *ngIf="isShowResult">
         <app-result-list [listResults]="results"></app-result-list>
+
+        <div class="loading-more-button">
+          <div *ngIf="isLoadingMore" class="loading">
+            <mat-spinner diameter="30"></mat-spinner>
+          </div>
+
+          <button *ngIf="isShowButtonLoadMore" mat-raised-button (click)="loadMore()" color="primary">Carregar mais</button>
+        </div>
       </div>
     </div>
   </main>

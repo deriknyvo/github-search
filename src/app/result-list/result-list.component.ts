@@ -30,4 +30,8 @@ export class ResultListComponent {
       autoFocus: false
     });
   }
+
+  ngOnChanges(changes: any) {
+    console.log(changes);
+  }
 }
