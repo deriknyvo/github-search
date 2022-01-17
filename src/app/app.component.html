@@ -15,7 +15,12 @@
       </div>
 
       <div *ngIf="isShowResult">
-        <app-result-list [listResults]="results"></app-result-list>
+        <app-result-list [listResults]="results"
+          (favoriteItem)="favorite($event)"
+          (unfavoriteItem)="unfavorite($event)"
+          (archiveItem)="archive($event)"
+          (unarchiveItem)="unarchive($event)">
+        </app-result-list>
 
         <div class="loading-more-button">
           <div *ngIf="isLoadingMore" class="loading">

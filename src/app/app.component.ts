@@ -3,6 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
 import { LanguageColorsService } from './services/language-colors.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -19,13 +20,14 @@ export class AppComponent {
   public isShowButtonLoadMore: boolean = false;
   private word: string = '';
   public results: Array<User | Repository | any> = [];
-  private storageResults: Array<User | Repository> = [];
+  private storageResults: Array<User | Repository | any> = [];
   private page = 1;
   private filters: any[] = [];
 
   constructor(
     private searchService: SearchService,
-    private langService: LanguageColorsService
+    private langService: LanguageColorsService,
+    private snackbarService: MatSnackBar
   ) { }
 
   toogleTheme(value: string) {
@@ -34,6 +36,9 @@ export class AppComponent {
 
   search(word: string): any {
     if (!word) {
+      this.results = [];
+      this.storageResults = [];
+      this.isShowButtonLoadMore = false;
       return false;
     }
 
@@ -60,18 +65,6 @@ export class AppComponent {
     });
   }
 
-  private filter(values: any[]): any { 
-    const isAllTrue = values.every(value => value.selected);
-    const isAllFalse = values.every(value => !value.selected);
-
-    if (isAllTrue || isAllFalse) {
-      return this.storageResults;
-    }
-
-    const filterSelected = values.filter(value => value.selected);
-    return this.storageResults.filter(item => item.type == filterSelected[0].id);
-  }
-
   applyFilter(values: any[]) {
     this.filters = values;
     this.isLoading = true;
@@ -81,6 +74,18 @@ export class AppComponent {
 
     this.isLoading = false;
     this.isShowResult = true;
+  }
+
+  filter(values: any[]): any { 
+    const isAllTrue = values.every(value => value.selected);
+    const isAllFalse = values.every(value => !value.selected);
+
+    if (isAllTrue || isAllFalse) {
+      return this.storageResults;
+    }
+
+    const filterSelected = values.filter(value => value.selected);
+    return this.storageResults.filter(item => item.type == filterSelected[0].id);
   }
 
   getUserLanguages(repos: any[]) {
@@ -169,4 +174,57 @@ export class AppComponent {
       });
     });
   }
+
+  favorite(item: any) {
+    const itemIndex = this.storageResults.findIndex((x: any) => x.id === item.id);
+
+    if (itemIndex >= 0) {
+      this.storageResults[itemIndex].favorite = true;
+      this.results = this.storageResults;
+
+      this.snackbarService.open('Gostei!', 'Fechar', {
+        duration: 3000
+      });
+    }
+  }
+
+  unfavorite(item: any) {
+    const itemIndex = this.storageResults.findIndex((x: any) => x.id === item.id);
+
+    if (itemIndex >= 0) {
+      this.storageResults[itemIndex].favorite = false;
+      this.results = this.storageResults;
+
+      this.snackbarService.open('Não gostei!', 'Fechar', {
+        duration: 3000
+      });
+    }
+  }
+
+  archive(item: any) {
+    const itemIndex = this.storageResults.findIndex((x: any) => x.id === item.id);
+
+    if (itemIndex >= 0) {
+      this.storageResults[itemIndex].archived = true;
+      this.results = this.storageResults;
+
+      this.snackbarService.open('Arquivado!', 'Fechar', {
+        duration: 3000
+      });
+    }
+  }
+
+  unarchive(item: any) {
+    const itemIndex = this.storageResults.findIndex((x: any) => x.id === item.id);
+
+    if (itemIndex >= 0) {
+      this.storageResults[itemIndex].archived = false;
+      this.results = this.storageResults;
+
+      this.snackbarService.open('Desarquivado!', 'Fechar', {
+        duration: 3000
+      });
+    }
+  }
+
 }

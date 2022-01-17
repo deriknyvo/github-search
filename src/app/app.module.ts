@@ -11,6 +11,7 @@ import { ResultListModule } from './result-list/result-list.module';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 
@@ -29,7 +30,8 @@ import { AppComponent } from './app.component';
     SearchInputModule,
     ResultListModule,
     HttpClientModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

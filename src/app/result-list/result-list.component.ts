@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRepositoryComponent } from '../dialog-repository/dialog-repository.component';
 import { DialogUserComponent } from '../dialog-user/dialog-user.component';
@@ -11,7 +11,11 @@ import { DialogUserComponent } from '../dialog-user/dialog-user.component';
 })
 export class ResultListComponent {
 
-  @Input() listResults!: Array<any>;
+  @Input() listResults!: Array<any>
+  @Output() favoriteItem = new EventEmitter();
+  @Output() unfavoriteItem = new EventEmitter();
+  @Output() archiveItem = new EventEmitter();
+  @Output() unarchiveItem = new EventEmitter();
 
   constructor(private dialog: MatDialog) {}
 
@@ -30,22 +34,23 @@ export class ResultListComponent {
     });
   }
 
-  ngOnChanges(changes: any) {
-    console.log(changes);
-  }
-
   favorite(event: any, item: any) {
     event.stopPropagation();
-    console.log(item);
+    this.favoriteItem.emit(item);
   }
 
   unfavorite(event: any, item: any) {
     event.stopPropagation();
-    console.log(item);
+    this.unfavoriteItem.emit(item);
   }
 
   archive(event: any, item: any) {
     event.stopPropagation();
-    console.log(item);
+    this.archiveItem.emit(item);
+  }
+
+  unarchive(event: any, item: any) {
+    event.stopPropagation();
+    this.unarchiveItem.emit(item);
   }
 }
