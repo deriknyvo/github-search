@@ -55,7 +55,7 @@ export class AppComponent {
   }
 
   async users() {
-    const users = await firstValueFrom(this.searchService.usersTemp(this.word));
+    const users = await firstValueFrom(this.searchService.usersTemp(this.word, 1));
     const usersMapped = [];
 
     for (let index = 0; index < users.items.length; index++) {
@@ -113,5 +113,12 @@ export class AppComponent {
 
     this.isLoading = false;
     this.isShowResult = true;
+  }
+
+  scrollEnd(element: any) {
+
+    if ((element.offsetHeight + element.scrollTop) === element.scrollHeight) {
+      console.log('teste');
+    }
   }
 }

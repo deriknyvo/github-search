@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    gap: 16px;
+
+    .repository-icon-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+
+        .book-icon {
+            width: 70px;
+            height: 70px;
+            font-size: 70px;
+        }
+    }
+
+    .icon-container {
+        color: var(--followers-text-color);
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 3px !important;
+
+        mat-icon {
+            height: 20px;
+            width: 20px;
+            font-size: 20px;
+        }
+    }
+
+    .repo-infos-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .name {
+            font-weight: 500 !important;
+            color: var(--links-text-color);
+            font-size: 19px;
+        }
+
+        .description {
+            margin: 12px 0;
+            color: var(--name-text-color);
+        }
+    }
+
+    mat-chip {
+        font-size: 12px;
+        min-height: 16px;
+    }
+}
