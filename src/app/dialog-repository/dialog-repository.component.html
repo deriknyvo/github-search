@@ -1,1 +1,51 @@
-<p>dialog-repository works!</p>
+<div class="container">
+    <div>
+        <div class="repository-icon-container">
+            <mat-icon class="book-icon material-icons-outlined" mat-list-icon>book</mat-icon>
+        </div>
+
+        <div>
+            <div *ngIf="data.stars" class="icon-container">
+                <mat-icon>star_outline</mat-icon>
+                <span>{{ data.stars }} stars</span>
+            </div>
+
+            <div *ngIf="data.watchers_count" class="icon-container">
+                <mat-icon>visibility</mat-icon>
+                <span>{{ data.watchers_count }} watching</span>
+            </div>
+
+            <div *ngIf="data.license" class="icon-container">
+                <mat-icon>balance</mat-icon>
+                <span>{{ data.license.name }}</span>
+            </div>
+
+            <div *ngIf="data.forks_count" class="icon-container">
+                <mat-icon>device_hub</mat-icon>
+                <span>{{ data.forks_count }} forks</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="repo-infos-container">
+        <div class="infos">
+            <a class="name" target="_blank" [href]="data.html_url">{{ data.full_name }}</a>
+    
+            <p class="description">
+                {{ data.description }}
+            </p>
+        </div>
+
+        <div mat-line>
+            <div class="languages">
+            <mat-chip-list class="user-languages">
+                <mat-chip *ngFor="let language of data.languages" 
+                [ngStyle]="{ backgroundColor: language.styles.backgroundColor, color: language.styles.color }"
+                selected>
+                {{ language.label }}
+                </mat-chip>
+            </mat-chip-list>
+            </div>
+        </div>
+    </div>
+</div>

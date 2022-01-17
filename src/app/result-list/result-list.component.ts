@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogRepositoryComponent } from '../dialog-repository/dialog-repository.component';
 import { DialogUserComponent } from '../dialog-user/dialog-user.component';
 import { User, Repository } from '../interfaces';
 
@@ -16,11 +17,17 @@ export class ResultListComponent {
   constructor(private dialog: MatDialog) {}
 
   openDialog(item: any) {
-    this.dialog.open(DialogUserComponent, {
+    const dialogs: any = {
+      'user': DialogUserComponent,
+      'repository': DialogRepositoryComponent
+    }
+
+    this.dialog.open(dialogs[item.type], {
       maxHeight: '600px',
       maxWidth: '1152px',
       data: item,
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      autoFocus: false
     });
   }
 }
