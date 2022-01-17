@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -7,14 +7,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./dialog-repository.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogRepositoryComponent implements OnInit {
+export class DialogRepositoryComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
-
-  ngOnInit(): void {
-    console.log(this.data);
-  }
-
 }

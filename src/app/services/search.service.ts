@@ -14,8 +14,7 @@ export class SearchService {
   ) {
     this.options = {
       headers: new HttpHeaders({
-        'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token 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'
+        'Accept': 'application/vnd.github.v3+json'
       })
     }
   }

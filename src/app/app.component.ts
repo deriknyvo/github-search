@@ -36,6 +36,9 @@ export class AppComponent {
 
   search(word: string): any {
     if (!word) {
+      this.results = [];
+      this.storageResults = [];
+      this.isShowButtonLoadMore = false;
       return false;
     }
 
@@ -179,7 +182,7 @@ export class AppComponent {
       this.storageResults[itemIndex].favorite = true;
       this.results = this.storageResults;
 
-      this.snackbarService.open('Gostei!', '', {
+      this.snackbarService.open('Gostei!', 'Fechar', {
         duration: 3000
       });
     }
@@ -192,7 +195,7 @@ export class AppComponent {
       this.storageResults[itemIndex].favorite = false;
       this.results = this.storageResults;
 
-      this.snackbarService.open('Não gostei!', '', {
+      this.snackbarService.open('Não gostei!', 'Fechar', {
         duration: 3000
       });
     }
@@ -205,7 +208,7 @@ export class AppComponent {
       this.storageResults[itemIndex].archived = true;
       this.results = this.storageResults;
 
-      this.snackbarService.open('Arquivado!', '', {
+      this.snackbarService.open('Arquivado!', 'Fechar', {
         duration: 3000
       });
     }
@@ -218,7 +221,7 @@ export class AppComponent {
       this.storageResults[itemIndex].archived = false;
       this.results = this.storageResults;
 
-      this.snackbarService.open('Desarquivado!', '', {
+      this.snackbarService.open('Desarquivado!', 'Fechar', {
         duration: 3000
       });
     }
