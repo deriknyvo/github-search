@@ -4,6 +4,7 @@ import { Repository, User } from './interfaces';
 import { SearchService } from './services/search.service';
 import { LanguageColorsService } from './services/language-colors.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ThemeToogleService } from './theme-toogle/theme-toogle.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AppComponent {
   
-  @HostBinding('class') className = '';
-
   public isLoading: boolean = false;
   public isLoadingMore: boolean = false;
   public isShowResult: boolean = false;
@@ -23,15 +22,15 @@ export class AppComponent {
   private storageResults: Array<User | Repository | any> = [];
   private page = 1;
   private filters: any[] = [];
-
+  @HostBinding('class') className = '';
+  
   constructor(
     private searchService: SearchService,
     private langService: LanguageColorsService,
-    private snackbarService: MatSnackBar
-  ) { }
-
-  toogleTheme(value: string) {
-    this.className = value;
+    private snackbarService: MatSnackBar,
+    private themeToogleService: ThemeToogleService
+  ) {
+    this.themeToogleService.theme.subscribe(theme => this.className = theme);
   }
 
   search(word: string): any {
